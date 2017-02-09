@@ -18,9 +18,10 @@ extension Reminder {
 
     @NSManaged public var createDate: NSDate
     @NSManaged public var name: String
+    @NSManaged public var highPriority: Bool
+    @NSManaged public var shouldTriggerOnLocation: Bool
     @NSManaged public var triggerDate: NSDate?
     @NSManaged public var notes: String
-    @NSManaged public var triggerTypeInteger: Int16
     @NSManaged public var triggerLocation: TriggerLocation?
     @NSManaged public var list: List?
 

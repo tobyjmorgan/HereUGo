@@ -6,10 +6,11 @@
     </entity>
     <entity name="Reminder" representedClassName="Reminder" syncable="YES">
         <attribute name="createDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="highPriority" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="notes" attributeType="String" syncable="YES"/>
+        <attribute name="shouldTriggerOnLocation" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="triggerDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="triggerTypeInteger" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="reminders" inverseEntity="List" syncable="YES"/>
         <relationship name="triggerLocation" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="TriggerLocation" inverseName="reminder" inverseEntity="TriggerLocation" syncable="YES"/>
     </entity>
@@ -21,8 +22,8 @@
         <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reminder" inverseName="triggerLocation" inverseEntity="Reminder" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Reminder" positionX="232" positionY="-48" width="128" height="148"/>
-        <element name="TriggerLocation" positionX="466" positionY="-21" width="128" height="28"/>
         <element name="List" positionX="-0" positionY="-21" width="128" height="28"/>
+        <element name="Reminder" positionX="232" positionY="-48" width="128" height="165"/>
+        <element name="TriggerLocation" positionX="466" positionY="-21" width="128" height="120"/>
     </elements>
 </model>

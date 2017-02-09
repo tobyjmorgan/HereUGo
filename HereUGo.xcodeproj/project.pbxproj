@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B8FA8B81E4B71A20037483C /* ReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FA8B71E4B71A20037483C /* ReminderViewController.swift */; };
+		6B8FA8BA1E4CC0240037483C /* TriggerLocation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FA8B91E4CC0240037483C /* TriggerLocation+Extensions.swift */; };
+		6B8FA8BB1E4CC0240037483C /* TriggerLocation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FA8B91E4CC0240037483C /* TriggerLocation+Extensions.swift */; };
+		6B8FA8BD1E4CCECE0037483C /* Reminder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FA8BC1E4CCECE0037483C /* Reminder+Extensions.swift */; };
+		6B8FA8BE1E4CCECE0037483C /* Reminder+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FA8BC1E4CCECE0037483C /* Reminder+Extensions.swift */; };
 		6BCBEAA21E46CAAE00DF6273 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAA11E46CAAE00DF6273 /* AppDelegate.swift */; };
 		6BCBEAA51E46CAAE00DF6273 /* HereUGo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAA31E46CAAE00DF6273 /* HereUGo.xcdatamodeld */; };
 		6BCBEAA91E46CAAE00DF6273 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAA81E46CAAE00DF6273 /* DetailViewController.swift */; };
@@ -42,8 +47,6 @@
 		6BCBEB011E4A304D00DF6273 /* TriggerLocation+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAF61E4A304D00DF6273 /* TriggerLocation+CoreDataClass.swift */; };
 		6BCBEB021E4A304D00DF6273 /* TriggerLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAF71E4A304D00DF6273 /* TriggerLocation+CoreDataProperties.swift */; };
 		6BCBEB031E4A304D00DF6273 /* TriggerLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAF71E4A304D00DF6273 /* TriggerLocation+CoreDataProperties.swift */; };
-		6BCBEB081E4A341600DF6273 /* Reminder+TriggerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEB071E4A341600DF6273 /* Reminder+TriggerType.swift */; };
-		6BCBEB091E4A341600DF6273 /* Reminder+TriggerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEB071E4A341600DF6273 /* Reminder+TriggerType.swift */; };
 		6BCBEB0B1E4A388200DF6273 /* Date+Pretty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEB0A1E4A388200DF6273 /* Date+Pretty.swift */; };
 		6BCBEB0C1E4A388200DF6273 /* Date+Pretty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEB0A1E4A388200DF6273 /* Date+Pretty.swift */; };
 		6BCBEB0F1E4A397B00DF6273 /* UIViewController+DailyDiaryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEB0E1E4A397B00DF6273 /* UIViewController+DailyDiaryError.swift */; };
@@ -68,6 +71,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6B8FA8B71E4B71A20037483C /* ReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderViewController.swift; sourceTree = "<group>"; };
+		6B8FA8B91E4CC0240037483C /* TriggerLocation+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TriggerLocation+Extensions.swift"; sourceTree = "<group>"; };
+		6B8FA8BC1E4CCECE0037483C /* Reminder+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reminder+Extensions.swift"; sourceTree = "<group>"; };
 		6BCBEA9E1E46CAAE00DF6273 /* HereUGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HereUGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BCBEAA11E46CAAE00DF6273 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BCBEAA41E46CAAE00DF6273 /* HereUGo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HereUGo.xcdatamodel; sourceTree = "<group>"; };
@@ -97,7 +103,6 @@
 		6BCBEAF51E4A304D00DF6273 /* List+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "List+CoreDataProperties.swift"; path = "../List+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		6BCBEAF61E4A304D00DF6273 /* TriggerLocation+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TriggerLocation+CoreDataClass.swift"; path = "../TriggerLocation+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6BCBEAF71E4A304D00DF6273 /* TriggerLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "TriggerLocation+CoreDataProperties.swift"; path = "../TriggerLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		6BCBEB071E4A341600DF6273 /* Reminder+TriggerType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reminder+TriggerType.swift"; sourceTree = "<group>"; };
 		6BCBEB0A1E4A388200DF6273 /* Date+Pretty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Pretty.swift"; sourceTree = "<group>"; };
 		6BCBEB0E1E4A397B00DF6273 /* UIViewController+DailyDiaryError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DailyDiaryError.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -187,11 +192,12 @@
 			children = (
 				6BCBEAF21E4A304D00DF6273 /* Reminder+CoreDataClass.swift */,
 				6BCBEAF31E4A304D00DF6273 /* Reminder+CoreDataProperties.swift */,
-				6BCBEB071E4A341600DF6273 /* Reminder+TriggerType.swift */,
+				6B8FA8BC1E4CCECE0037483C /* Reminder+Extensions.swift */,
 				6BCBEAF41E4A304D00DF6273 /* List+CoreDataClass.swift */,
 				6BCBEAF51E4A304D00DF6273 /* List+CoreDataProperties.swift */,
 				6BCBEAF61E4A304D00DF6273 /* TriggerLocation+CoreDataClass.swift */,
 				6BCBEAF71E4A304D00DF6273 /* TriggerLocation+CoreDataProperties.swift */,
+				6B8FA8B91E4CC0240037483C /* TriggerLocation+Extensions.swift */,
 				6BCBEADA1E48DEDE00DF6273 /* TJMApplicationError.swift */,
 				6BCBEAD81E48DE9000DF6273 /* CoreDataController.swift */,
 				6BCBEAA31E46CAAE00DF6273 /* HereUGo.xcdatamodeld */,
@@ -216,6 +222,7 @@
 				6BCBEAE61E49026B00DF6273 /* ReminderListViewController.swift */,
 				6BCBEAA81E46CAAE00DF6273 /* DetailViewController.swift */,
 				6BCBEADE1E48DF8E00DF6273 /* LocationManager.swift */,
+				6B8FA8B71E4B71A20037483C /* ReminderViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -381,17 +388,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BCBEAF81E4A304D00DF6273 /* Reminder+CoreDataClass.swift in Sources */,
+				6B8FA8BD1E4CCECE0037483C /* Reminder+Extensions.swift in Sources */,
 				6BCBEB0B1E4A388200DF6273 /* Date+Pretty.swift in Sources */,
+				6B8FA8B81E4B71A20037483C /* ReminderViewController.swift in Sources */,
 				6BCBEAA21E46CAAE00DF6273 /* AppDelegate.swift in Sources */,
 				6BCBEAA51E46CAAE00DF6273 /* HereUGo.xcdatamodeld in Sources */,
 				6BCBEAD91E48DE9000DF6273 /* CoreDataController.swift in Sources */,
 				6BCBEAEA1E490C4400DF6273 /* UserSettings.swift in Sources */,
 				6BCBEAE41E4901B300DF6273 /* ReminderCell.swift in Sources */,
 				6BCBEAE71E49026B00DF6273 /* ReminderListViewController.swift in Sources */,
+				6B8FA8BA1E4CC0240037483C /* TriggerLocation+Extensions.swift in Sources */,
 				6BCBEAFC1E4A304D00DF6273 /* List+CoreDataClass.swift in Sources */,
 				6BCBEB001E4A304D00DF6273 /* TriggerLocation+CoreDataClass.swift in Sources */,
 				6BCBEADF1E48DF8E00DF6273 /* LocationManager.swift in Sources */,
-				6BCBEB081E4A341600DF6273 /* Reminder+TriggerType.swift in Sources */,
 				6BCBEADB1E48DEDE00DF6273 /* TJMApplicationError.swift in Sources */,
 				6BCBEAED1E4913B100DF6273 /* ReminderFetchedResultsManager.swift in Sources */,
 				6BCBEB021E4A304D00DF6273 /* TriggerLocation+CoreDataProperties.swift in Sources */,
@@ -408,13 +417,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BCBEADC1E48DEDE00DF6273 /* TJMApplicationError.swift in Sources */,
+				6B8FA8BE1E4CCECE0037483C /* Reminder+Extensions.swift in Sources */,
 				6BCBEAEB1E490C4400DF6273 /* UserSettings.swift in Sources */,
 				6BCBEB011E4A304D00DF6273 /* TriggerLocation+CoreDataClass.swift in Sources */,
 				6BCBEABC1E46CAAE00DF6273 /* HereUGoTests.swift in Sources */,
 				6BCBEAF91E4A304D00DF6273 /* Reminder+CoreDataClass.swift in Sources */,
 				6BCBEAFD1E4A304D00DF6273 /* List+CoreDataClass.swift in Sources */,
+				6B8FA8BB1E4CC0240037483C /* TriggerLocation+Extensions.swift in Sources */,
 				6BCBEB0C1E4A388200DF6273 /* Date+Pretty.swift in Sources */,
-				6BCBEB091E4A341600DF6273 /* Reminder+TriggerType.swift in Sources */,
 				6BCBEAE01E48DF8E00DF6273 /* LocationManager.swift in Sources */,
 				6BCBEB031E4A304D00DF6273 /* TriggerLocation+CoreDataProperties.swift in Sources */,
 				6BCBEAFF1E4A304D00DF6273 /* List+CoreDataProperties.swift in Sources */,
@@ -665,6 +675,7 @@
 				6BCBEACD1E46CAAE00DF6273 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6BCBEACE1E46CAAE00DF6273 /* Build configuration list for PBXNativeTarget "HereUGoTests" */ = {
 			isa = XCConfigurationList;
@@ -673,6 +684,7 @@
 				6BCBEAD01E46CAAE00DF6273 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6BCBEAD11E46CAAE00DF6273 /* Build configuration list for PBXNativeTarget "HereUGoUITests" */ = {
 			isa = XCConfigurationList;
@@ -681,6 +693,7 @@
 				6BCBEAD31E46CAAE00DF6273 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -34,4 +34,7 @@ class ReminderCell: UITableViewCell {
         subLabel.text = ""        
     }
 
+    @IBAction func onCheckBox(_ sender: Any) {
+        checkboxButton.isSelected = !checkboxButton.isSelected
+    }
 }

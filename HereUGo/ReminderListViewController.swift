@@ -15,8 +15,10 @@ class ReminderListViewController: UIViewController {
     @IBOutlet var sortOptionsContainerView: UIView!
     @IBOutlet var sortButtons: [UIButton]!
     
-    var detailViewController: DetailViewController? = nil
+    var detailViewController: ReminderViewController? = nil
 
+    var lastReminder: Reminder? = nil
+    
     // our core data singleton
     let dataController = CoreDataController.sharedInstance
     
@@ -41,7 +43,7 @@ class ReminderListViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? ReminderViewController
         }
 
         // listen for errors
@@ -67,6 +69,8 @@ class ReminderListViewController: UIViewController {
             }
         }
         
+        lastReminder = nil
+        
         tableView.reloadData()
         
         displayWelcome()
@@ -86,13 +90,11 @@ class ReminderListViewController: UIViewController {
             backItem.title = "Back"
             navigationItem.backBarButtonItem = backItem
             
-            if let indexPath = tableView.indexPathForSelectedRow {
-                let object = fetchedResultsManager.fetchedResultsController.object(at: indexPath)
-                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+            if let lastReminder = lastReminder {
+                let controller = (segue.destination as! UINavigationController).topViewController as! ReminderViewController
+                controller.reminder = lastReminder
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
-                
             }
         }
     }
@@ -128,18 +130,11 @@ extension ReminderListViewController {
         fetchedResultsManager.searchString = ""
         
         // create new row
-        let newReminder = Reminder(context: dataController.managedObjectContext)
-        
-        // set properties and save
-        newReminder.createDate = NSDate()
-        newReminder.name = "New Reminder"
-        newReminder.notes = ""
-        newReminder.triggerType = .none
+        let newReminder = Reminder.newInstance(context: dataController.managedObjectContext)        
         dataController.saveContext()
         
         // automatically go to detail view to edit details
-        let indexPath = IndexPath(row: 0, section: 0)
-        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .top)
+        lastReminder = newReminder
         performSegue(withIdentifier: "showDetail", sender: self)
     }
     
@@ -148,7 +143,7 @@ extension ReminderListViewController {
         
         guard let reminderCell = cell as? ReminderCell else { return }
         
-        reminderCell.subLabel.text = (entry.createDate as Date).prettyDateStringEEEE_NTH_MMMM
+        reminderCell.subLabel.text = (entry.createDate as Date).prettyDateStringEEE_M_d_yy_h_mm_a
         reminderCell.mainLabel!.text = entry.name
         
         reminderCell.layoutIfNeeded()
@@ -184,6 +179,7 @@ extension ReminderListViewController {
         
         UserSettings.setSortPreference(sortPreference: sortPreference)
         refreshSortButtons()
+        fetchedResultsManager.resetFetchedResultsController()
     }
 }
 
@@ -246,7 +242,11 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             dataController.saveContext()
         }
     }
-    
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        lastReminder = fetchedResultsManager.fetchedResultsController.object(at: indexPath)
+        
+        return indexPath
+    }
 }
 
 
