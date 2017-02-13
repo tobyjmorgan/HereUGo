@@ -12,7 +12,7 @@ import CoreData
 class CoreDataController: NSObject {
     
     // singleton instance
-    static let sharedInstance = CoreDataController()
+    static let shared = CoreDataController()
 
     private override init() {
         // nothing to do here, but want to make initialization private

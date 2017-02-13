@@ -20,7 +20,7 @@ class ReminderListViewController: UIViewController {
     var lastReminder: Reminder? = nil
     
     // our core data singleton
-    let dataController = CoreDataController.sharedInstance
+    let dataController = CoreDataController.shared
     
     // will handle fetching core data results
     lazy var fetchedResultsManager: ReminderFetchedResultsManager = {

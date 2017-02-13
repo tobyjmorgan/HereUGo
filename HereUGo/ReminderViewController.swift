@@ -44,7 +44,7 @@ class ReminderViewController: UITableViewController {
         if let text = reminderNameTextField.text {
             
             reminder?.name = text
-            CoreDataController.sharedInstance.saveContext()
+            CoreDataController.shared.saveContext()
         }
     }
     
@@ -259,7 +259,7 @@ extension ReminderViewController  {
             reminder.highPriority = true
         }
         
-        CoreDataController.sharedInstance.saveContext()
+        CoreDataController.shared.saveContext()
     }
 
     @IBAction func onDatePickerValueChanged() {
@@ -268,7 +268,7 @@ extension ReminderViewController  {
         
         alertDateDoneButton.setTitle(alertDatePicker.date.prettyDateStringEEEE_MMM_d_yyyy_h_mm_a, for: .normal)
         reminder.triggerDate = alertDatePicker.date as NSDate
-        CoreDataController.sharedInstance.saveContext()
+        CoreDataController.shared.saveContext()
     }
     
     @IBAction func onAlertDateDone() {
@@ -283,7 +283,10 @@ extension ReminderViewController  {
             
             // update the store
             reminder.triggerDate = alertDatePicker.date as NSDate
-            CoreDataController.sharedInstance.saveContext()
+            CoreDataController.shared.saveContext()
+            
+            // create the notification
+            NotificationManager.shared.addCalendarNotification(date: Date(), reminderName: reminder.name, repeats: false)
             
             hideDatePickerStuff()
             
@@ -309,7 +312,7 @@ extension ReminderViewController  {
             
             // clear it out and save to store
             reminder.triggerDate = nil
-            CoreDataController.sharedInstance.saveContext()
+            CoreDataController.shared.saveContext()
             
             hideDatePickerStuff()
             
@@ -320,7 +323,7 @@ extension ReminderViewController  {
             // set trigger date to a default alert date/time and save it to store
             let defaultDate = Date() + 60*10
             reminder.triggerDate = defaultDate as NSDate
-            CoreDataController.sharedInstance.saveContext()
+            CoreDataController.shared.saveContext()
             
             makeAlertDateButtonLookActive()
             
@@ -339,7 +342,7 @@ extension ReminderViewController  {
             
             // clear it out and save to store
             reminder.shouldTriggerOnLocation = false
-            CoreDataController.sharedInstance.saveContext()
+            CoreDataController.shared.saveContext()
             
         } else {
             
@@ -348,12 +351,12 @@ extension ReminderViewController  {
             // if no triggerLocation has ever been created then create it now
             if reminder.triggerLocation == nil {
                 
-                let location = TriggerLocation.newInstance(context: CoreDataController.sharedInstance.managedObjectContext)
+                let location = TriggerLocation.newInstance(context: CoreDataController.shared.managedObjectContext)
                 reminder.triggerLocation = location
             }
 
             reminder.shouldTriggerOnLocation = true
-            CoreDataController.sharedInstance.saveContext()
+            CoreDataController.shared.saveContext()
             
             refreshLocation()
         }

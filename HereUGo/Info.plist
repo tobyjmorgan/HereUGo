@@ -24,6 +24,10 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to your location so you can set location based alerts.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to your location so it can alert you when you&apos;re near a location you have specified.</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

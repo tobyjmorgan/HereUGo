@@ -41,10 +41,10 @@ class LocationManager: NSObject {
     }
     
     // a closure for what to do when successfully geolocated
-    internal var onLocationFix: ((Double, Double) -> Void)?
+    internal var onLocationFix: ((CLLocation) -> Void)?
 
     // used when requesting current location
-    func getLocation(completion: @escaping (Double, Double) -> Void) {
+    func getLocation(completion: @escaping (CLLocation) -> Void) {
 
         // capture the completion handler for use later
         onLocationFix = completion
@@ -146,7 +146,7 @@ extension LocationManager: CLLocationManagerDelegate {
             // just in case there is any GUI code inside the onLocationFix completion handler
             DispatchQueue.main.async {
                 // call the closure for successful location
-                onLocationFix(location.coordinate.latitude, location.coordinate.longitude)
+                onLocationFix(location)
             }
         }
         

@@ -27,4 +27,10 @@ extension Date {
         formatter.dateFormat = "EEEE, MMM d, yyyy, h:mm a"
         return formatter.string(from: self)
     }
+    
+    var dateComponents: DateComponents {
+        
+        let calendar = Calendar.current
+        return calendar.dateComponents([.second, .hour, .minute, .timeZone, .day, .month, .year], from: self)
+    }
 }
