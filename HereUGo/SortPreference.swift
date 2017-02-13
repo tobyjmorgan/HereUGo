@@ -16,10 +16,10 @@ enum SortPreference: Int {
 }
 
 extension SortPreference {
-    func getSortDescriptors() -> [NSSortDescriptor]? {
+    func getSortDescriptors() -> [NSSortDescriptor] {
         switch self {
         case .closest:
-            return nil //NSSortDescriptor(key: "", ascending: true)
+            return [] //NSSortDescriptor(key: "", ascending: true)
         case .newest:
             return [NSSortDescriptor(key: "createDate", ascending: false)]
         case .oldest:

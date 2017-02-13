@@ -23,6 +23,7 @@ class NotificationManager: NSObject {
         super.init()
         
         currentCenter.delegate = self
+        currentCenter.removeAllDeliveredNotifications()
     }
     
     func requestAuthorization() {

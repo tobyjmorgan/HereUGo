@@ -44,8 +44,9 @@ class ReminderFetchedResultsManager: NSObject, NSFetchedResultsControllerDelegat
     }
     
     func getSortDescriptors() -> [NSSortDescriptor]? {
-        let preference = UserSettings.getSortPreference()
         
+        let preference = UserSettings.getSortPreference()
+            
         return preference.getSortDescriptors()
     }
     

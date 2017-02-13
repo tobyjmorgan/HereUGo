@@ -163,7 +163,7 @@ extension ReminderListViewController {
         let sortPreference = UserSettings.getSortPreference()
         
         for sortButton in sortButtons {
-            sortButton.setTitleColor(UIColor.lightGray, for: .normal)
+            sortButton.setTitleColor(UIColor.darkGray, for: .normal)
             
             if sortButton.tag == sortPreference.rawValue {
                 sortButton.setTitleColor(UIColor.white, for: .normal)
