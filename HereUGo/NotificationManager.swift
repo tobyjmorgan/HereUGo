@@ -11,9 +11,7 @@ import UserNotifications
 
 class NotificationManager: NSObject {
     
-    static let calendarNotification = "HereUGoCalendarNotification"
-    static let locationNotification = "HereUGoLocationNotification"
-    static let notificationSound = "Notification.wav"
+    static let notificationSound = "Notification"
     
     static let shared = NotificationManager()
     
@@ -23,6 +21,8 @@ class NotificationManager: NSObject {
         // nothing to do here, but want to make initialization private
         // to force use of the shared instance singleton
         super.init()
+        
+        currentCenter.delegate = self
     }
     
     func requestAuthorization() {
@@ -37,24 +37,46 @@ class NotificationManager: NSObject {
         }
     }
     
-    func addCalendarNotification(date: Date, reminderName: String, repeats: Bool) {
-        
-//        currentCenter.getNotificationSettings { (settings) in
-//            
-//            //switch settings.
-//        }
+    func addCalendarNotification(date: Date, reminderName: String, identifier: String, repeats: Bool) {
         
         let content = UNMutableNotificationContent()
-        content.title = "HereUGo Notification"
-        content.body = "reminderName"
+        content.title = reminderName
+        content.body = date.prettyDateStringEEEE_MMM_d_yyyy_h_mm_a
         content.badge = 1
         content.sound = UNNotificationSound(named: NotificationManager.notificationSound)
         
-        let dateComponents = (Date() + 20).dateComponents //date.dateComponents
+        // TODO: five seconds in the future - just for testing
+        // TODO: replace with commented code for release
+        let dateComponents = (Date() + 5).dateComponents //date.dateComponents
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        let request = UNNotificationRequest(identifier: NotificationManager.calendarNotification, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
         
         currentCenter.add(request)
+    }
+    
+    func removeNotification(identifier: String) {
+        
+        currentCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+    }
+}
+
+
+
+////////////////////////////////////////////////////////////////////////
+// MARK: - UNUserNotificationCenterDelegate
+extension NotificationManager: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let objectIDDescription = response.notification.request.identifier
+        
+        print("Received response to: \(objectIDDescription)")
+        
+        completionHandler()
     }
 }

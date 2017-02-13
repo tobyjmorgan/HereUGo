@@ -16,7 +16,9 @@
 		6B8FA8E51E4E189F0037483C /* MKPlacemark+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FA8E41E4E189F0037483C /* MKPlacemark+Extensions.swift */; };
 		6B8FA8E71E4E57FC0037483C /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FA8E61E4E57FC0037483C /* SearchResultsTableViewController.swift */; };
 		6B8FA8E91E520A700037483C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FA8E81E520A700037483C /* NotificationManager.swift */; };
-		6B8FA8EB1E520EDB0037483C /* Notificaiton.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6B8FA8EA1E520EDB0037483C /* Notificaiton.wav */; };
+		6B8FA8EB1E520EDB0037483C /* Notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6B8FA8EA1E520EDB0037483C /* Notification.wav */; };
+		6B8FA8EE1E5239A90037483C /* Layer 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B8FA8EC1E5239A90037483C /* Layer 1@2x.png */; };
+		6B8FA8EF1E5239A90037483C /* Layer 1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B8FA8ED1E5239A90037483C /* Layer 1@3x.png */; };
 		6BCBEAA21E46CAAE00DF6273 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAA11E46CAAE00DF6273 /* AppDelegate.swift */; };
 		6BCBEAA51E46CAAE00DF6273 /* HereUGo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAA31E46CAAE00DF6273 /* HereUGo.xcdatamodeld */; };
 		6BCBEAA91E46CAAE00DF6273 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAA81E46CAAE00DF6273 /* DetailViewController.swift */; };
@@ -83,7 +85,9 @@
 		6B8FA8E41E4E189F0037483C /* MKPlacemark+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MKPlacemark+Extensions.swift"; sourceTree = "<group>"; };
 		6B8FA8E61E4E57FC0037483C /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
 		6B8FA8E81E520A700037483C /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		6B8FA8EA1E520EDB0037483C /* Notificaiton.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Notificaiton.wav; sourceTree = "<group>"; };
+		6B8FA8EA1E520EDB0037483C /* Notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Notification.wav; sourceTree = "<group>"; };
+		6B8FA8EC1E5239A90037483C /* Layer 1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Layer 1@2x.png"; sourceTree = "<group>"; };
+		6B8FA8ED1E5239A90037483C /* Layer 1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Layer 1@3x.png"; sourceTree = "<group>"; };
 		6BCBEA9E1E46CAAE00DF6273 /* HereUGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HereUGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BCBEAA11E46CAAE00DF6273 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BCBEAA41E46CAAE00DF6273 /* HereUGo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HereUGo.xcdatamodel; sourceTree = "<group>"; };
@@ -173,7 +177,9 @@
 				6BCBEAE21E49018D00DF6273 /* View */,
 				6BCBEAE11E48DF9800DF6273 /* Controller */,
 				6BCBEAAD1E46CAAE00DF6273 /* Assets.xcassets */,
-				6B8FA8EA1E520EDB0037483C /* Notificaiton.wav */,
+				6B8FA8EC1E5239A90037483C /* Layer 1@2x.png */,
+				6B8FA8ED1E5239A90037483C /* Layer 1@3x.png */,
+				6B8FA8EA1E520EDB0037483C /* Notification.wav */,
 				6BCBEAAF1E46CAAE00DF6273 /* LaunchScreen.storyboard */,
 				6BCBEAB21E46CAAE00DF6273 /* Info.plist */,
 			);
@@ -376,7 +382,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BCBEAB11E46CAAE00DF6273 /* LaunchScreen.storyboard in Resources */,
-				6B8FA8EB1E520EDB0037483C /* Notificaiton.wav in Resources */,
+				6B8FA8EE1E5239A90037483C /* Layer 1@2x.png in Resources */,
+				6B8FA8EF1E5239A90037483C /* Layer 1@3x.png in Resources */,
+				6B8FA8EB1E520EDB0037483C /* Notification.wav in Resources */,
 				6BCBEAAE1E46CAAE00DF6273 /* Assets.xcassets in Resources */,
 				6BCBEAAC1E46CAAE00DF6273 /* Main.storyboard in Resources */,
 			);
@@ -598,6 +606,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 646297YD5V;
 				INFOPLIST_FILE = HereUGo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.redBred.HereUGo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -611,6 +620,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 646297YD5V;
 				INFOPLIST_FILE = HereUGo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.redBred.HereUGo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

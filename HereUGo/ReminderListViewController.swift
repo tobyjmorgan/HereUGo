@@ -100,6 +100,9 @@ class ReminderListViewController: UIViewController {
     }
 }
 
+
+
+////////////////////////////////////////////////////////////////////////
 // MARK: Helper methods
 extension ReminderListViewController {
     
@@ -171,6 +174,8 @@ extension ReminderListViewController {
 
 
 
+
+////////////////////////////////////////////////////////////////////////
 // MARK: - IBActions
 extension ReminderListViewController {
     
@@ -185,6 +190,8 @@ extension ReminderListViewController {
 
 
 
+
+////////////////////////////////////////////////////////////////////////
 // MARK: - Table View
 extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -251,6 +258,8 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
 
 
 
+
+////////////////////////////////////////////////////////////////////////
 // MARK: UISearchBarDelegate
 extension ReminderListViewController: UISearchBarDelegate {
     
@@ -282,9 +291,6 @@ extension ReminderListViewController: UISearchBarDelegate {
         searchBar.showsCancelButton = false
     }
 }
-
-
-
 
 
 
