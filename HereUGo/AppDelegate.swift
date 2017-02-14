@@ -35,9 +35,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         navigationController.topViewController!.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem
         splitViewController.delegate = self
         
-        // request notification authorization when app starts
-        NotificationManager.shared.requestAuthorization()
-        
         return true
     }
 

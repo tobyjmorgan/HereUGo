@@ -18,6 +18,8 @@ extension TriggerLocation {
 
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
+    @NSManaged public var name: String?
+    @NSManaged public var addressDescription: String?
     @NSManaged public var triggerWhenLeaving: Bool
     @NSManaged public var range: Int16
     @NSManaged public var reminder: Reminder?

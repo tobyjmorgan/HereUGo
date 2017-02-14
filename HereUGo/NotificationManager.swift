@@ -14,12 +14,13 @@ class NotificationManager: NSObject {
     
     static let calendarNotificationPrefix = "CAL"
     static let locationNotificationPrefix = "LOC"
-    
     static let notificationSound = "Notification.wav"
     
-    static let shared = NotificationManager()
-    
     let currentCenter = UNUserNotificationCenter.current()
+    
+
+    
+    static let shared = NotificationManager()
     
     private override init() {
         // nothing to do here, but want to make initialization private

@@ -94,19 +94,18 @@ class LocationManager: NSObject {
         let location = CLLocation(latitude: latitude, longitude: longitude)
         
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            
             // make sure this happens on the main queue
             // just in case there is any GUI code inside the completion handler
             DispatchQueue.main.async {
-                guard let placemark = placemarks?.first,
-                    let _ = placemark.name,
-                    let city = placemark.locality,
-                    let area = placemark.administrativeArea else {
-                        
-                        completion("Unable to get location")
-                        return
+                
+                guard let placemark = placemarks?.first else {
+                    
+                    completion("Unable to get location description")
+                    return
                 }
                 
-                completion("\(city), \(area)")
+                completion(placemark.prettyDescription)
             }
 
         }

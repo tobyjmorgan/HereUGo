@@ -15,8 +15,10 @@
         <relationship name="triggerLocation" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="TriggerLocation" inverseName="reminder" inverseEntity="TriggerLocation" syncable="YES"/>
     </entity>
     <entity name="TriggerLocation" representedClassName="TriggerLocation" syncable="YES">
+        <attribute name="addressDescription" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="range" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="triggerWhenLeaving" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Reminder" inverseName="triggerLocation" inverseEntity="Reminder" syncable="YES"/>
@@ -24,6 +26,6 @@
     <elements>
         <element name="List" positionX="-0" positionY="-21" width="128" height="28"/>
         <element name="Reminder" positionX="232" positionY="-48" width="128" height="165"/>
-        <element name="TriggerLocation" positionX="466" positionY="-21" width="128" height="120"/>
+        <element name="TriggerLocation" positionX="466" positionY="-21" width="128" height="150"/>
     </elements>
 </model>

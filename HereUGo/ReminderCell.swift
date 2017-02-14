@@ -17,8 +17,6 @@ class ReminderCell: UITableViewCell {
     @IBOutlet var subLabel: UILabel!
     @IBOutlet var disclosureImage: UIImageView!
     
-    let geocoder = CLGeocoder()
-
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -32,27 +30,10 @@ class ReminderCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func setLocation(latitude: Double, longitude: Double, triggerWhenEntering: Bool) {
-        
-        let location = CLLocation(latitude: latitude, longitude: longitude)
-        
-        geocoder.reverseGeocodeLocation(location) { placemarks, error in
-            
-            // make sure this happens on the main queue
-            // just in case there is any GUI code inside the completion handler
-            DispatchQueue.main.async {
-                
-                guard let placemark = placemarks?.first else { return }
-  
-                self.subLabel.text = "Alert at: \(placemark.prettyDescription)"
-            }
-            
-        }
-    }
-
     func resetCell() {
         mainLabel.text = ""
-        subLabel.text = ""        
+        subLabel.text = ""
+        checkboxButton.isSelected = false
     }
 
     @IBAction func onCheckBox(_ sender: Any) {

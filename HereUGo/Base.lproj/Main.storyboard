@@ -424,19 +424,29 @@
                                             <constraint firstAttribute="height" constant="44" id="x7w-6V-tPq"/>
                                         </constraints>
                                     </view>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Nmz-KK-ETG">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="31"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IsU-z5-DzC">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="30"/>
+                                        <subviews>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Nmz-KK-ETG">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                                                <segments>
+                                                    <segment title="When I Arrive"/>
+                                                    <segment title="When I Leave"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="onArriveOrLeaveDidChange" destination="aWX-Nc-o2L" eventType="valueChanged" id="U5B-4d-KAA"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="382-2D-vuK"/>
+                                            <constraint firstAttribute="height" constant="30" id="Tl2-AW-Tya"/>
+                                            <constraint firstAttribute="bottom" secondItem="Nmz-KK-ETG" secondAttribute="bottom" constant="1" id="Wm7-Bh-SBC"/>
+                                            <constraint firstAttribute="trailing" secondItem="Nmz-KK-ETG" secondAttribute="trailing" id="fZk-a9-jbq"/>
+                                            <constraint firstItem="Nmz-KK-ETG" firstAttribute="top" secondItem="IsU-z5-DzC" secondAttribute="top" id="gPV-gZ-roK"/>
+                                            <constraint firstItem="Nmz-KK-ETG" firstAttribute="leading" secondItem="IsU-z5-DzC" secondAttribute="leading" id="hfV-gL-P6p"/>
                                         </constraints>
-                                        <segments>
-                                            <segment title="When I Arrive"/>
-                                            <segment title="When I Leave"/>
-                                        </segments>
-                                        <connections>
-                                            <action selector="onArriveOrLeave:" destination="aWX-Nc-o2L" eventType="valueChanged" id="n2i-rk-nMN"/>
-                                        </connections>
-                                    </segmentedControl>
+                                    </view>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LDh-7v-lcx">
                                         <rect key="frame" x="0.0" y="74" width="375" height="529"/>
                                     </mapView>

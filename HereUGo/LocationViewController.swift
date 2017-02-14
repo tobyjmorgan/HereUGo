@@ -10,9 +10,10 @@ import UIKit
 import MapKit
 
 protocol LocationViewControllerDelegate {
-    func onLocationPicked(latitude: Double, longitude: Double, description: String)
+    func onLocationPicked(latitude: Double, longitude: Double, triggerWhenLeaving: Bool, locationName: String?, addressDescription: String?, range: Int)
     func getTriggerWhenLeaving() -> Bool
     func setTriggerWhenLeaving(whenLeaving: Bool)
+    func getTriggerLocation
 }
 
 class LocationViewController: UIViewController {
@@ -88,19 +89,23 @@ class LocationViewController: UIViewController {
             arriveOrLeaveSegmentedControl.selectedSegmentIndex = 0
         }
     }
+    
+    func isTriggerWhenLeaving() -> Bool {
+        
+        if arriveOrLeaveSegmentedControl.selectedSegmentIndex == 1 {
+            return true
+        }
+        
+        return false
+    }
 }
 
 
 
 // Mark - IBActions
 extension LocationViewController {
-    @IBAction func onArriveOrLeave(_ sender: UISegmentedControl) {
-        
-        if sender.selectedSegmentIndex == 1 {
-            delegate?.setTriggerWhenLeaving(whenLeaving: true)
-        } else {
-            delegate?.setTriggerWhenLeaving(whenLeaving: false)
-        }
+    @IBAction func onArriveOrLeaveDidChange() {
+        delegate?.setTriggerWhenLeaving(whenLeaving: isTriggerWhenLeaving())
     }
 }
 
@@ -116,7 +121,7 @@ extension LocationViewController: UITableViewDelegate {
         let placemark = resultsTableController.searchResults[indexPath.row].placemark
         
         // send the info back to the delegate
-        delegate?.onLocationPicked(latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude, description: placemark.prettyDescription)
+        delegate?.onLocationPicked(latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude, triggerWhenLeaving: isTriggerWhenLeaving(), locationName: placemark.name, addressDescription: placemark.prettyDescription, range: 50)
         
         // display the placemark on the map
         presentMapViewWithPlacemark(placemark: placemark)

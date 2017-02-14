@@ -29,4 +29,13 @@ extension TriggerLocation {
         
         return newInstance
     }
+    
+    var prettyLocationDescription: String {
+        
+        // flatmap to remove optionals
+        let placeDescriptionElements: [String] = [self.name, self.addressDescription].flatMap { $0 }
+        
+        // concatenate with commas
+        return placeDescriptionElements.joined(separator: ", ")
+    }
 }

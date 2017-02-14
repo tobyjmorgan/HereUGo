@@ -19,11 +19,6 @@ class ReminderListViewController: UIViewController {
 
     var lastReminder: Reminder? = nil
     
-    // out location manager for getting descriptions of locations
-    lazy var locationManager: LocationManager = {
-        return LocationManager(alertPresentingViewController: self)
-    }()
-    
     // our core data singleton
     let dataController = CoreDataController.shared
     
@@ -161,7 +156,7 @@ extension ReminderListViewController {
             
             if let location = entry.triggerLocation, location.isLocationSet {
                 
-                reminderCell.setLocation(latitude: location.latitude, longitude: location.longitude, triggerWhenEntering: false)
+                reminderCell.subLabel.text = location.prettyLocationDescription
                 
             } else {
                 

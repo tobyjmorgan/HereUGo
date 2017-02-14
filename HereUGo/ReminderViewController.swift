@@ -244,8 +244,8 @@ extension ReminderViewController {
            let location = reminder.triggerLocation,
            location.isLocationSet {
             
-            alertLocationLabel.text = "Location: \(location.latitude), \(location.longitude)"
-            
+            self.alertLocationLabel.text = location.prettyLocationDescription
+
         } else {
             
             alertLocationLabel.text = "Location not set"
@@ -278,7 +278,7 @@ extension ReminderViewController {
                 
                 if location.isLocationSet {
                     
-                    NotificationManager.shared.addLocationNotification(latitude: location.latitude, longitude: location.longitude, locationDescription: description, reminderName: reminder.name, identifier: reminder.objectID.description, range: 50, triggerWhenLeaving: location.triggerWhenLeaving)
+                    NotificationManager.shared.addLocationNotification(latitude: location.latitude, longitude: location.longitude, locationDescription: location.prettyLocationDescription, reminderName: reminder.name, identifier: reminder.objectID.description, range: Int(location.range), triggerWhenLeaving: location.triggerWhenLeaving)
                 }                
             }
             
@@ -349,6 +349,9 @@ extension ReminderViewController  {
     
     @IBAction func onAlertDateSwitch(_ sender: Any) {
         
+        // request notification authorization when creating reminders
+        NotificationManager.shared.requestAuthorization()
+        
         guard let reminder = reminder else { return }
         
         // this switch toggles whether there will be an alert based on date/time
@@ -382,6 +385,9 @@ extension ReminderViewController  {
     }
     
     @IBAction func onAlertLocationSwitch(_ sender: Any) {
+        
+        // request notification authorization when creating reminders
+        NotificationManager.shared.requestAuthorization()
         
         guard let reminder = reminder else { return }
         
@@ -423,7 +429,8 @@ extension ReminderViewController  {
 
 // MARK - LocationViewControllerDelegate
 extension ReminderViewController: LocationViewControllerDelegate {
-    func onLocationPicked(latitude: Double, longitude: Double, description: String) {
+    
+    func onLocationPicked(latitude: Double, longitude: Double, triggerWhenLeaving: Bool, locationName: String?, addressDescription: String?, range: Int) {
 
         guard let reminder = reminder else { return }
         
@@ -440,12 +447,18 @@ extension ReminderViewController: LocationViewControllerDelegate {
             reminder.triggerLocation = location
             
             locationToWorkOn = location
+            
+            // initial value
+            // this is a bit fiddly - since we are using a delegate, when a TriggerLocation is first created, the triggerWhenLeaving should be defaulted to false and the GUI segmented controller should be changed to match
+            // if it is just an update then we allow the getTrigger and setTrigger methods to change those values
+            locationToWorkOn.triggerWhenLeaving = triggerWhenLeaving
         }
 
         locationToWorkOn.latitude = latitude
         locationToWorkOn.longitude = longitude
-        locationToWorkOn.range = 50
-        locationToWorkOn.triggerWhenLeaving = false
+        locationToWorkOn.name = locationName
+        locationToWorkOn.addressDescription = addressDescription
+        locationToWorkOn.range = Int16(range)
 
         CoreDataController.shared.saveContext()
         

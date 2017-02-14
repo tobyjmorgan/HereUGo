@@ -15,6 +15,10 @@ extension CLPlacemark {
         
         var address : String?
         
+        if let name = self.name {
+            address?.append(name)
+        }
+        
         if let addrList = self.addressDictionary?["FormattedAddressLines"] as? [String] {
             address =  addrList.joined(separator: ", ")
         }
