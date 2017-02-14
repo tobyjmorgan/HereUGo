@@ -483,6 +483,15 @@ extension ReminderViewController: LocationViewControllerDelegate {
         location.triggerWhenLeaving = whenLeaving
         CoreDataController.shared.saveContext()
     }
+    
+    func currentLocationWithName() -> (Double, Double, String)? {
+        
+        guard let reminder = reminder, let location = reminder.triggerLocation, location.isLocationSet else { return nil }
+        
+        let locationName = location.name ?? ""
+        
+        return (location.latitude, location.longitude, locationName)
+    }
 }
 
 

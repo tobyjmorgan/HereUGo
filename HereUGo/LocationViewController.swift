@@ -13,7 +13,7 @@ protocol LocationViewControllerDelegate {
     func onLocationPicked(latitude: Double, longitude: Double, triggerWhenLeaving: Bool, locationName: String?, addressDescription: String?, range: Int)
     func getTriggerWhenLeaving() -> Bool
     func setTriggerWhenLeaving(whenLeaving: Bool)
-    func getTriggerLocation
+    func currentLocationWithName() -> (Double, Double, String)?
 }
 
 class LocationViewController: UIViewController {
@@ -57,11 +57,29 @@ class LocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager.getLocation { (location) in
+        if let delegate = delegate, let location = delegate.currentLocationWithName() {
             
-            print("Location: \(location)")
-
-            self.setMapViewRegion(coordinate: location.coordinate)
+            let coordinate = CLLocationCoordinate2D(latitude: location.0, longitude: location.1)
+            let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
+            
+            mapView.removeAnnotations(mapView.annotations)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = placemark.coordinate
+            annotation.title = location.2
+            
+            mapView.addAnnotation(annotation)
+            
+            setMapViewRegion(coordinate: placemark.coordinate)
+            
+        } else {
+            
+            locationManager.getLocation { (location) in
+                
+                print("Location: \(location)")
+                
+                self.setMapViewRegion(coordinate: location.coordinate)
+            }
         }
         
         refreshArriveOrLeaveSegmentedControl()
