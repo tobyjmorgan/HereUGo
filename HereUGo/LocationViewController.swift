@@ -9,10 +9,19 @@
 import UIKit
 import MapKit
 
+protocol LocationViewControllerDelegate {
+    func onLocationPicked(latitude: Double, longitude: Double, description: String)
+    func getTriggerWhenLeaving() -> Bool
+    func setTriggerWhenLeaving(whenLeaving: Bool)
+}
+
 class LocationViewController: UIViewController {
 
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var searchBarContainerView: UIView!
+    @IBOutlet var arriveOrLeaveSegmentedControl: UISegmentedControl!
+    
+    var delegate: LocationViewControllerDelegate? = nil
     
     // will handle fetching location info
     lazy var locationManager: LocationManager = {
@@ -53,6 +62,8 @@ class LocationViewController: UIViewController {
 
             self.setMapViewRegion(coordinate: location.coordinate)
         }
+        
+        refreshArriveOrLeaveSegmentedControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,7 +79,32 @@ class LocationViewController: UIViewController {
         
         mapView.setRegion(region, animated: true)
     }
+    
+    func refreshArriveOrLeaveSegmentedControl() {
+        
+        if let triggerWhenLeaving = delegate?.getTriggerWhenLeaving(), triggerWhenLeaving {
+            arriveOrLeaveSegmentedControl.selectedSegmentIndex = 1
+        } else {
+            arriveOrLeaveSegmentedControl.selectedSegmentIndex = 0
+        }
+    }
 }
+
+
+
+// Mark - IBActions
+extension LocationViewController {
+    @IBAction func onArriveOrLeave(_ sender: UISegmentedControl) {
+        
+        if sender.selectedSegmentIndex == 1 {
+            delegate?.setTriggerWhenLeaving(whenLeaving: true)
+        } else {
+            delegate?.setTriggerWhenLeaving(whenLeaving: false)
+        }
+    }
+}
+
+
 
 extension LocationViewController: UISearchControllerDelegate {
 }
@@ -79,6 +115,10 @@ extension LocationViewController: UITableViewDelegate {
         
         let placemark = resultsTableController.searchResults[indexPath.row].placemark
         
+        // send the info back to the delegate
+        delegate?.onLocationPicked(latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude, description: placemark.prettyDescription)
+        
+        // display the placemark on the map
         presentMapViewWithPlacemark(placemark: placemark)
     }
     

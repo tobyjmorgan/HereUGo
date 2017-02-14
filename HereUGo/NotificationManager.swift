@@ -8,10 +8,14 @@
 
 import Foundation
 import UserNotifications
+import CoreLocation
 
 class NotificationManager: NSObject {
     
-    static let notificationSound = "Notification"
+    static let calendarNotificationPrefix = "CAL"
+    static let locationNotificationPrefix = "LOC"
+    
+    static let notificationSound = "Notification.wav"
     
     static let shared = NotificationManager()
     
@@ -40,6 +44,8 @@ class NotificationManager: NSObject {
     
     func addCalendarNotification(date: Date, reminderName: String, identifier: String, repeats: Bool) {
         
+        let prefixedNotification = NotificationManager.calendarNotificationPrefix + identifier
+        
         let content = UNMutableNotificationContent()
         content.title = reminderName
         content.body = date.prettyDateStringEEEE_MMM_d_yyyy_h_mm_a
@@ -51,14 +57,57 @@ class NotificationManager: NSObject {
         let dateComponents = (Date() + 5).dateComponents //date.dateComponents
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: prefixedNotification, content: content, trigger: trigger)
         
         currentCenter.add(request)
     }
     
-    func removeNotification(identifier: String) {
+    func addLocationNotification(latitude: Double, longitude: Double, locationDescription: String, reminderName: String, identifier: String, range: Int, triggerWhenLeaving: Bool) {
+        
+        let prefixedNotification = NotificationManager.locationNotificationPrefix + identifier
+        
+        let content = UNMutableNotificationContent()
+        content.title = reminderName
+        content.body = locationDescription
+        content.badge = 1
+        content.sound = UNNotificationSound(named: NotificationManager.notificationSound)
+        
+        // reconstruct a coordinate from lat/long
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        // create a circular region
+        let region = CLCircularRegion(center: coordinate, radius: CLLocationDistance(range), identifier: identifier)
+        
+        // apply whether this gets triggered on leaving or arriving
+        if triggerWhenLeaving {
+            region.notifyOnEntry = false
+            region.notifyOnExit = true
+        } else {
+            region.notifyOnEntry = true
+            region.notifyOnExit = false
+        }
+        
+        let trigger = UNLocationNotificationTrigger(region: region, repeats: false)
+        let request = UNNotificationRequest(identifier: prefixedNotification, content: content, trigger: trigger)
+        
+        currentCenter.add(request)
+    }
+
+    private func removeNotification(identifier: String) {
         
         currentCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+    }
+    
+    func removeCalendarNotification(identifier: String) {
+        
+        let prefixedNotification = NotificationManager.calendarNotificationPrefix + identifier
+        removeNotification(identifier: prefixedNotification)
+    }
+
+    func removeLocationNotification(identifier: String) {
+        
+        let prefixedNotification = NotificationManager.locationNotificationPrefix + identifier
+        removeNotification(identifier: prefixedNotification)
     }
 }
 

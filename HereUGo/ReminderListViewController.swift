@@ -19,6 +19,11 @@ class ReminderListViewController: UIViewController {
 
     var lastReminder: Reminder? = nil
     
+    // out location manager for getting descriptions of locations
+    lazy var locationManager: LocationManager = {
+        return LocationManager(alertPresentingViewController: self)
+    }()
+    
     // our core data singleton
     let dataController = CoreDataController.shared
     
@@ -146,8 +151,27 @@ extension ReminderListViewController {
         
         guard let reminderCell = cell as? ReminderCell else { return }
         
-        reminderCell.subLabel.text = (entry.createDate as Date).prettyDateStringEEE_M_d_yy_h_mm_a
-        reminderCell.mainLabel!.text = entry.name
+        if entry.highPriority {
+            reminderCell.mainLabel!.text = "!! " + entry.name
+        } else {
+            reminderCell.mainLabel!.text = entry.name
+        }
+        
+        if entry.shouldTriggerOnLocation {
+            
+            if let location = entry.triggerLocation, location.isLocationSet {
+                
+                reminderCell.setLocation(latitude: location.latitude, longitude: location.longitude, triggerWhenEntering: false)
+                
+            } else {
+                
+                reminderCell.subLabel.text = "Location not set"
+            }
+            
+        } else if let triggerDate = entry.triggerDate {
+            
+            reminderCell.subLabel.text = (triggerDate as Date).prettyDateStringEEEE_MMM_d_yyyy_h_mm_a
+        }
         
         reminderCell.layoutIfNeeded()
     }

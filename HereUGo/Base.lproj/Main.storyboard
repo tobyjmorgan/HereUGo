@@ -424,8 +424,21 @@
                                             <constraint firstAttribute="height" constant="44" id="x7w-6V-tPq"/>
                                         </constraints>
                                     </view>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Nmz-KK-ETG">
+                                        <rect key="frame" x="0.0" y="44" width="375" height="31"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="382-2D-vuK"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="When I Arrive"/>
+                                            <segment title="When I Leave"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="onArriveOrLeave:" destination="aWX-Nc-o2L" eventType="valueChanged" id="n2i-rk-nMN"/>
+                                        </connections>
+                                    </segmentedControl>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LDh-7v-lcx">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="559"/>
+                                        <rect key="frame" x="0.0" y="74" width="375" height="529"/>
                                     </mapView>
                                 </subviews>
                             </stackView>
@@ -439,6 +452,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="arriveOrLeaveSegmentedControl" destination="Nmz-KK-ETG" id="cOx-xu-1gS"/>
                         <outlet property="mapView" destination="LDh-7v-lcx" id="gNk-yS-E2Z"/>
                         <outlet property="searchBarContainerView" destination="hP2-IN-Jom" id="LQM-aL-c94"/>
                     </connections>
@@ -550,7 +564,7 @@
                                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LvN-Y8-jGt">
                                                         <rect key="frame" x="94" y="0.0" width="93.5" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                        <state key="normal" title="Closest">
+                                                        <state key="normal" title="Priority">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -633,7 +647,7 @@
                                                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                                             <nil key="highlightedColor"/>
                                                                                         </label>
-                                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRS-ie-lea">
+                                                                                        <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="rRS-ie-lea">
                                                                                             <rect key="frame" x="0.0" y="52" width="267" height="4"/>
                                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                             <constraints>

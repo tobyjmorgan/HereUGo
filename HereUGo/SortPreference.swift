@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 enum SortPreference: Int {
-    case closest = 1
+    case priority = 1
     case newest
     case oldest
 }
@@ -18,8 +18,8 @@ enum SortPreference: Int {
 extension SortPreference {
     func getSortDescriptors() -> [NSSortDescriptor] {
         switch self {
-        case .closest:
-            return [] //NSSortDescriptor(key: "", ascending: true)
+        case .priority:
+            return [NSSortDescriptor(key: "highPriority", ascending: false)]
         case .newest:
             return [NSSortDescriptor(key: "createDate", ascending: false)]
         case .oldest:

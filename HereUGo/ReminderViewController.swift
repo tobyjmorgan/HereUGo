@@ -25,6 +25,7 @@ class ReminderViewController: UITableViewController {
     @IBOutlet var alertDateCell: UITableViewCell!
     
     var pickingDate: Bool = false
+    var triggerWhenLeaving: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,6 +122,12 @@ class ReminderViewController: UITableViewController {
         }
         
         return indexPath
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? LocationViewController {
+            vc.delegate = self
+        }
     }
 }
 
@@ -257,7 +264,28 @@ extension ReminderViewController {
         } else {
             
             // ensure it doesn't exist
-            NotificationManager.shared.removeNotification(identifier: reminder.objectID.description)
+            NotificationManager.shared.removeCalendarNotification(identifier: reminder.objectID.description)
+        }
+    }
+    
+    func refreshLocationNotification() {
+        
+        guard let reminder = reminder else { return }
+        
+        if reminder.shouldTriggerOnLocation {
+            
+            if let location = reminder.triggerLocation {
+                
+                if location.isLocationSet {
+                    
+                    NotificationManager.shared.addLocationNotification(latitude: location.latitude, longitude: location.longitude, locationDescription: description, reminderName: reminder.name, identifier: reminder.objectID.description, range: 50, triggerWhenLeaving: location.triggerWhenLeaving)
+                }                
+            }
+            
+        } else {
+            
+            // ensure it doesn't exist
+            NotificationManager.shared.removeLocationNotification(identifier: reminder.objectID.description)
         }
     }
 }
@@ -365,6 +393,8 @@ extension ReminderViewController  {
             reminder.shouldTriggerOnLocation = false
             CoreDataController.shared.saveContext()
             
+            refreshLocationNotification()
+            
         } else {
             
             // there is no trigger location, so we are setting it now
@@ -379,6 +409,7 @@ extension ReminderViewController  {
             reminder.shouldTriggerOnLocation = true
             CoreDataController.shared.saveContext()
             
+            refreshLocationNotification()
             refreshLocation()
         }
         
@@ -387,6 +418,59 @@ extension ReminderViewController  {
     }
 }
 
+
+
+
+// MARK - LocationViewControllerDelegate
+extension ReminderViewController: LocationViewControllerDelegate {
+    func onLocationPicked(latitude: Double, longitude: Double, description: String) {
+
+        guard let reminder = reminder else { return }
+        
+        let locationToWorkOn: TriggerLocation
+        
+        // if no triggerLocation has ever been created then create it now
+        if let triggerLocation = reminder.triggerLocation {
+            
+            locationToWorkOn = triggerLocation
+            
+        } else {
+            let location = TriggerLocation.newInstance(context: CoreDataController.shared.managedObjectContext)
+            
+            reminder.triggerLocation = location
+            
+            locationToWorkOn = location
+        }
+
+        locationToWorkOn.latitude = latitude
+        locationToWorkOn.longitude = longitude
+        locationToWorkOn.range = 50
+        locationToWorkOn.triggerWhenLeaving = false
+
+        CoreDataController.shared.saveContext()
+        
+        // create/update notification
+        refreshLocationNotification()
+        
+        // update the label to show location description
+        alertLocationLabel.text = description
+    }
+    
+    func getTriggerWhenLeaving() -> Bool {
+        
+        guard let reminder = reminder, let location = reminder.triggerLocation else { return false }
+        
+        return location.triggerWhenLeaving
+    }
+    
+    func setTriggerWhenLeaving(whenLeaving: Bool) {
+        
+        guard let reminder = reminder, let location = reminder.triggerLocation else { return }
+        
+        location.triggerWhenLeaving = whenLeaving
+        CoreDataController.shared.saveContext()
+    }
+}
 
 
 // MARK: - Row Identity - for collapsing / showing cells based on state
