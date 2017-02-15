@@ -14,6 +14,7 @@ class ReminderListViewController: UIViewController {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var sortOptionsContainerView: UIView!
     @IBOutlet var sortButtons: [UIButton]!
+    @IBOutlet var filterButtons: [UIButton]!
     
     var detailViewController: ReminderViewController? = nil
 
@@ -146,6 +147,8 @@ extension ReminderListViewController {
         
         guard let reminderCell = cell as? ReminderCell else { return }
         
+        reminderCell.checkboxButton.isSelected = entry.completed
+        
         if entry.highPriority {
             reminderCell.mainLabel!.text = "!! " + entry.name
         } else {
@@ -179,15 +182,36 @@ extension ReminderListViewController {
     func refreshSortButtons() {
         
         // keep track of the user's preference on how results are sorted
-        let sortPreference = UserSettings.getSortPreference()
+        let preference = UserSettings.getSortPreference()
         
         for sortButton in sortButtons {
             sortButton.setTitleColor(UIColor.darkGray, for: .normal)
             
-            if sortButton.tag == sortPreference.rawValue {
+            if sortButton.tag == preference.rawValue {
                 sortButton.setTitleColor(UIColor.white, for: .normal)
             }
         }
+    }
+    
+    func refreshFilterButtons() {
+        
+        // keep track of the user's preference on how results are filtered
+        let preference = UserSettings.getSortPreference()
+        
+        for filterButton in filterButtons {
+            filterButton.setTitleColor(UIColor.darkGray, for: .normal)
+            
+            if filterButton.tag == preference.rawValue {
+                filterButton.setTitleColor(UIColor.white, for: .normal)
+            }
+        }
+    }
+    
+    func onCheckBoxButton(_ sender: UIButton) {
+        
+        let entry = fetchedResultsManager.fetchedResultsController.object(at: IndexPath(row: sender.tag, section: 0))
+        
+        entry.completed = !entry.completed
     }
 }
 
@@ -199,10 +223,18 @@ extension ReminderListViewController {
 extension ReminderListViewController {
     
     @IBAction func onSortButton(_ sender: UIButton) {
-        guard let sortPreference = SortPreference(rawValue: sender.tag) else { return }
+        guard let preference = SortPreference(rawValue: sender.tag) else { return }
         
-        UserSettings.setSortPreference(sortPreference: sortPreference)
+        UserSettings.setSortPreference(sortPreference: preference)
         refreshSortButtons()
+        fetchedResultsManager.resetFetchedResultsController()
+    }
+    
+    @IBAction func onFilterButton(_ sender: UIButton) {
+        guard let preference = FilterPreference(rawValue: sender.tag) else { return }
+    
+        UserSettings.setFilterPreference(filterPreference: preference)
+        refreshFilterButtons()
         fetchedResultsManager.resetFetchedResultsController()
     }
 }
@@ -230,6 +262,8 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReminderCell", for: indexPath) as! ReminderCell
         
         cell.resetCell()
+        cell.checkboxButton.tag = indexPath.row
+        cell.checkboxButton.addTarget(self, action: #selector(ReminderListViewController.onCheckBoxButton(_:)), for: .touchUpInside)
         
         let entry = fetchedResultsManager.fetchedResultsController.object(at: indexPath)
         
@@ -240,20 +274,6 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
         
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        
-//        if let sections = fetchedResultsManager.fetchedResultsController.sections {
-//            
-//            let currentSection = sections[section]
-//            let prettySectionName = DiaryEntry.prettySectionIdentifier(sectionIdentifier: currentSection.name)
-//            
-//            return prettySectionName
-//        }
-//        
-//        return nil
-//    }
-//    
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
@@ -268,6 +288,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
             dataController.saveContext()
         }
     }
+    
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         lastReminder = fetchedResultsManager.fetchedResultsController.object(at: indexPath)
         

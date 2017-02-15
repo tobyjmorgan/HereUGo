@@ -58,6 +58,8 @@
 		6BCBEB101E4A397B00DF6273 /* UIViewController+DailyDiaryError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEB0E1E4A397B00DF6273 /* UIViewController+DailyDiaryError.swift */; };
 		6BDEBFC11E5376DC00C64155 /* CLPlacemark+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDEBFC01E5376DC00C64155 /* CLPlacemark+extensions.swift */; };
 		6BDEBFC31E53780A00C64155 /* CLPlacemark+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDEBFC01E5376DC00C64155 /* CLPlacemark+extensions.swift */; };
+		6BDEBFC51E53B60400C64155 /* FilterPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDEBFC41E53B60400C64155 /* FilterPreference.swift */; };
+		6BDEBFC61E53B60400C64155 /* FilterPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDEBFC41E53B60400C64155 /* FilterPreference.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +120,7 @@
 		6BCBEB0A1E4A388200DF6273 /* Date+Pretty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Pretty.swift"; sourceTree = "<group>"; };
 		6BCBEB0E1E4A397B00DF6273 /* UIViewController+DailyDiaryError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DailyDiaryError.swift"; sourceTree = "<group>"; };
 		6BDEBFC01E5376DC00C64155 /* CLPlacemark+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLPlacemark+extensions.swift"; sourceTree = "<group>"; };
+		6BDEBFC41E53B60400C64155 /* FilterPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterPreference.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +242,7 @@
 				6BCBEAA31E46CAAE00DF6273 /* HereUGo.xcdatamodeld */,
 				6BCBEAE91E490C4400DF6273 /* UserSettings.swift */,
 				6BCBEAEF1E49150100DF6273 /* SortPreference.swift */,
+				6BDEBFC41E53B60400C64155 /* FilterPreference.swift */,
 				6BCBEAEC1E4913B100DF6273 /* ReminderFetchedResultsManager.swift */,
 			);
 			name = Model;
@@ -437,6 +441,7 @@
 				6BCBEAE41E4901B300DF6273 /* ReminderCell.swift in Sources */,
 				6BDEBFC11E5376DC00C64155 /* CLPlacemark+extensions.swift in Sources */,
 				6BCBEAE71E49026B00DF6273 /* ReminderListViewController.swift in Sources */,
+				6BDEBFC51E53B60400C64155 /* FilterPreference.swift in Sources */,
 				6B8FA8BA1E4CC0240037483C /* TriggerLocation+Extensions.swift in Sources */,
 				6B8FA8E71E4E57FC0037483C /* SearchResultsTableViewController.swift in Sources */,
 				6BCBEAFC1E4A304D00DF6273 /* List+CoreDataClass.swift in Sources */,
@@ -461,6 +466,7 @@
 				6B8FA8BE1E4CCECE0037483C /* Reminder+Extensions.swift in Sources */,
 				6BCBEAEB1E490C4400DF6273 /* UserSettings.swift in Sources */,
 				6BCBEB011E4A304D00DF6273 /* TriggerLocation+CoreDataClass.swift in Sources */,
+				6BDEBFC61E53B60400C64155 /* FilterPreference.swift in Sources */,
 				6BCBEABC1E46CAAE00DF6273 /* HereUGoTests.swift in Sources */,
 				6BCBEAF91E4A304D00DF6273 /* Reminder+CoreDataClass.swift in Sources */,
 				6BCBEAFD1E4A304D00DF6273 /* List+CoreDataClass.swift in Sources */,

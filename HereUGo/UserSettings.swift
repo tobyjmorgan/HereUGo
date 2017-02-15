@@ -11,6 +11,7 @@ import Foundation
 struct UserSettings {
     
     static let sortPreferenceKey = "sortPreferenceKey"
+    static let filterPreferenceKey = "filterPreferenceKey"
     
     static func getSortPreference() -> SortPreference {
         
@@ -30,6 +31,27 @@ struct UserSettings {
         let defaults = UserDefaults.standard
         
         defaults.set(sortPreference.rawValue, forKey: UserSettings.sortPreferenceKey)
+        defaults.synchronize()
+    }
+
+    static func getFilterPreference() -> FilterPreference {
+        
+        let defaults = UserDefaults.standard
+        
+        guard let preference = FilterPreference(rawValue: defaults.integer(forKey: UserSettings.filterPreferenceKey)) else {
+            
+            setFilterPreference(filterPreference: .incomplete)
+            return FilterPreference.incomplete
+        }
+        
+        return preference
+    }
+    
+    static func setFilterPreference(filterPreference: FilterPreference) {
+        
+        let defaults = UserDefaults.standard
+        
+        defaults.set(filterPreference.rawValue, forKey: UserSettings.filterPreferenceKey)
         defaults.synchronize()
     }
 }

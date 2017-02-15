@@ -611,10 +611,10 @@
                                         </constraints>
                                     </view>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U9r-YA-7Pn">
-                                        <rect key="frame" x="0.0" y="82" width="375" height="521"/>
+                                        <rect key="frame" x="0.0" y="82" width="375" height="487"/>
                                         <subviews>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XJu-ID-ali">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="521"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="487"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <prototypes>
                                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderCell" id="SuT-0b-3dV" customClass="ReminderCell" customModule="HereUGo" customModuleProvider="target">
@@ -659,7 +659,7 @@
                                                                                         </label>
                                                                                         <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="rRS-ie-lea">
                                                                                             <rect key="frame" x="0.0" y="52" width="267" height="4"/>
-                                                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                                             <constraints>
                                                                                                 <constraint firstAttribute="height" constant="4" id="ZRN-Q3-IZu"/>
                                                                                             </constraints>
@@ -713,6 +713,57 @@
                                             <constraint firstItem="XJu-ID-ali" firstAttribute="top" secondItem="U9r-YA-7Pn" secondAttribute="top" id="q9b-Us-25T"/>
                                         </constraints>
                                     </view>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dxi-QP-GPA">
+                                        <rect key="frame" x="0.0" y="573" width="375" height="30"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="eBT-FX-Hqs">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter by:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqd-tH-HmC">
+                                                        <rect key="frame" x="0.0" y="0.0" width="94" height="30"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H3f-6R-WRl">
+                                                        <rect key="frame" x="94" y="0.0" width="93.5" height="30"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <state key="normal" title="Incomplete">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="onFilterButton:" destination="09Q-Av-qM3" eventType="touchUpInside" id="4ZG-LW-5s2"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="twj-4M-IYo">
+                                                        <rect key="frame" x="187.5" y="0.0" width="94" height="30"/>
+                                                        <state key="normal" title="Complete">
+                                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="onFilterButton:" destination="09Q-Av-qM3" eventType="touchUpInside" id="gPt-G0-Br4"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GRz-Gg-Cnc">
+                                                        <rect key="frame" x="281.5" y="0.0" width="93.5" height="30"/>
+                                                        <state key="normal" title="Both">
+                                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="onFilterButton:" destination="09Q-Av-qM3" eventType="touchUpInside" id="Ini-Yi-SGQ"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.72082167860000002" green="0.77100235220000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="eBT-FX-Hqs" firstAttribute="top" secondItem="Dxi-QP-GPA" secondAttribute="top" id="DNI-L4-VUw"/>
+                                            <constraint firstAttribute="trailing" secondItem="eBT-FX-Hqs" secondAttribute="trailing" id="MJN-m3-m6J"/>
+                                            <constraint firstItem="eBT-FX-Hqs" firstAttribute="leading" secondItem="Dxi-QP-GPA" secondAttribute="leading" id="c8l-Cr-XR9"/>
+                                            <constraint firstAttribute="bottom" secondItem="eBT-FX-Hqs" secondAttribute="bottom" id="dVx-Wp-aFH"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -732,6 +783,9 @@
                         <outletCollection property="sortButtons" destination="LvN-Y8-jGt" collectionClass="NSMutableArray" id="hj1-u0-Bss"/>
                         <outletCollection property="sortButtons" destination="JNv-b8-29O" collectionClass="NSMutableArray" id="4tt-yD-cfC"/>
                         <outletCollection property="sortButtons" destination="0CF-Oh-NnO" collectionClass="NSMutableArray" id="GX4-ue-xn5"/>
+                        <outletCollection property="filterButtons" destination="H3f-6R-WRl" collectionClass="NSMutableArray" id="erx-aP-G9l"/>
+                        <outletCollection property="filterButtons" destination="twj-4M-IYo" collectionClass="NSMutableArray" id="bG3-Km-U6P"/>
+                        <outletCollection property="filterButtons" destination="GRz-Gg-Cnc" collectionClass="NSMutableArray" id="c0n-7T-wMF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qIl-d1-0CZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

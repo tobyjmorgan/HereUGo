@@ -31,6 +31,12 @@ class ReminderViewController: UITableViewController {
         super.viewDidLoad()
 
         alertDateDoneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
+        
+        // make sure alert stuff is off if the reminder has been completed
+        if let reminder = reminder, reminder.completed {
+            reminder.triggerDate = nil
+            reminder.shouldTriggerOnLocation = false
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -256,6 +262,9 @@ extension ReminderViewController {
         
         guard let reminder = reminder else { return }
         
+        // don't refresh it if the reminder has already been marked as completed
+        if reminder.completed { return }
+        
         if let triggerDate = reminder.triggerDate {
             
             // create/update the notification
@@ -272,6 +281,9 @@ extension ReminderViewController {
         
         guard let reminder = reminder else { return }
         
+        // don't refresh it if the reminder has already been marked as completed
+        if reminder.completed { return }
+
         if reminder.shouldTriggerOnLocation {
             
             if let location = reminder.triggerLocation {
@@ -287,6 +299,39 @@ extension ReminderViewController {
             // ensure it doesn't exist
             NotificationManager.shared.removeLocationNotification(identifier: reminder.objectID.description)
         }
+    }
+    
+    enum SwitchSource {
+        case calendar
+        case location
+    }
+    
+    func showCompletedWarning(source: SwitchSource, sender: UISwitch) {
+
+        let alert = UIAlertController(title: "Already Completed", message: "This reminder was marked as complete. Do you want to reactivate it?", preferredStyle: .alert)
+        
+        let reactivate = UIAlertAction(title: "Yes, mark as incomplete", style: .default) { (action) in
+            self.reminder?.completed = false
+            CoreDataController.shared.saveContext()
+            
+            switch source {
+            
+            case .calendar:
+                sender.setOn(true, animated: true)
+                self.onAlertDateSwitch(sender)
+                
+            case .location:
+                sender.setOn(true, animated: true)
+                self.onAlertLocationSwitch(sender)
+            }
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(reactivate)
+        alert.addAction(cancel)
+
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -347,12 +392,18 @@ extension ReminderViewController  {
         refreshCalendarNotification()
     }
     
-    @IBAction func onAlertDateSwitch(_ sender: Any) {
+    @IBAction func onAlertDateSwitch(_ sender: UISwitch) {
         
         // request notification authorization when creating reminders
         NotificationManager.shared.requestAuthorization()
         
         guard let reminder = reminder else { return }
+        
+        guard !reminder.completed else {
+            sender.setOn(false, animated: true)
+            showCompletedWarning(source: .calendar, sender: sender)
+            return
+        }
         
         // this switch toggles whether there will be an alert based on date/time
         
@@ -384,12 +435,18 @@ extension ReminderViewController  {
         refreshCalendarNotification()   
     }
     
-    @IBAction func onAlertLocationSwitch(_ sender: Any) {
+    @IBAction func onAlertLocationSwitch(_ sender: UISwitch) {
         
         // request notification authorization when creating reminders
         NotificationManager.shared.requestAuthorization()
         
         guard let reminder = reminder else { return }
+        
+        guard !reminder.completed else {
+            sender.setOn(false, animated: true)
+            showCompletedWarning(source: .location, sender: sender)
+            return
+        }
         
         if reminder.shouldTriggerOnLocation {
             

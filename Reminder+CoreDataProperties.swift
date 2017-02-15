@@ -22,6 +22,7 @@ extension Reminder {
     @NSManaged public var shouldTriggerOnLocation: Bool
     @NSManaged public var triggerDate: NSDate?
     @NSManaged public var notes: String
+    @NSManaged public var completed: Bool
     @NSManaged public var triggerLocation: TriggerLocation?
     @NSManaged public var list: List?
 

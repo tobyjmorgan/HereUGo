@@ -5,6 +5,7 @@
         <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Reminder" inverseName="list" inverseEntity="Reminder" syncable="YES"/>
     </entity>
     <entity name="Reminder" representedClassName="Reminder" syncable="YES">
+        <attribute name="completed" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="createDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="highPriority" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
@@ -25,7 +26,7 @@
     </entity>
     <elements>
         <element name="List" positionX="-0" positionY="-21" width="128" height="28"/>
-        <element name="Reminder" positionX="232" positionY="-48" width="128" height="165"/>
+        <element name="Reminder" positionX="232" positionY="-48" width="128" height="180"/>
         <element name="TriggerLocation" positionX="466" positionY="-21" width="128" height="150"/>
     </elements>
 </model>

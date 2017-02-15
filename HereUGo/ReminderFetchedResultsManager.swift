@@ -50,6 +50,13 @@ class ReminderFetchedResultsManager: NSObject, NSFetchedResultsControllerDelegat
         return preference.getSortDescriptors()
     }
     
+    func getBaseFilterPredicate() -> NSPredicate? {
+        
+        let preference = UserSettings.getFilterPreference()
+        
+        return preference.getPredicate()
+    }
+    
     var fetchedResultsController: NSFetchedResultsController<Reminder> {
     
         if _fetchedResultsController != nil {
@@ -64,15 +71,23 @@ class ReminderFetchedResultsManager: NSObject, NSFetchedResultsControllerDelegat
         // Set the batch size to a suitable number.
         request.fetchBatchSize = 20
         
-        
         if searchString.characters.count > 0 {
             
             let predicate = NSPredicate(format: "name contains[cd] %@ OR notes contains[cd] %@", argumentArray: [searchString, searchString])
-            request.predicate = predicate
+            
+            if let basePredicate = getBaseFilterPredicate() {
+                
+                request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [basePredicate, predicate])
+                
+            } else {
+                
+                request.predicate = predicate
+            }
+            
             
         } else {
             
-            request.predicate = nil
+            request.predicate = getBaseFilterPredicate()
         }
         
         
