@@ -11,6 +11,7 @@ import CoreLocation
 
 extension CLPlacemark {
     
+    // provides a pretty concatenation of placemark address elements
     public var prettyDescription: String {
         
         var address : String?

@@ -10,16 +10,21 @@ import Foundation
 import UserNotifications
 import CoreLocation
 
+// singleton notification manager
 class NotificationManager: NSObject {
     
+    // used to differentiate calendar and location based notifications
     static let calendarNotificationPrefix = "CAL"
     static let locationNotificationPrefix = "LOC"
+    
+    // custom sound
     static let notificationSound = "Notification.wav"
+    
     
     let currentCenter = UNUserNotificationCenter.current()
     
 
-    
+    // singleton stuff
     static let shared = NotificationManager()
     
     private override init() {
@@ -33,12 +38,11 @@ class NotificationManager: NSObject {
     
     func requestAuthorization() {
         
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (authorized, error) in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound/*, .badge*/]) { (authorized, error) in
         
             if !authorized {
-                let appError = TJMApplicationError(title: "Notifcations Not Athorized", message: "This app requires notifications to be authorized so you can receive alerts for date based and location based reminders", fatal: true)
-                
-                NotificationCenter.default.post(name: TJMApplicationError.ErrorNotification, object: self, userInfo: appError.makeUserInfoDict())
+                let appError = TJMApplicationError(title: "Notifcations Not Athorized", message: "This app requires notifications to be authorized so you can receive alerts for date based and location based reminders. You can change this in Settings", fatal: false)
+                appError.postMyself()
             }
         }
     }
@@ -50,12 +54,10 @@ class NotificationManager: NSObject {
         let content = UNMutableNotificationContent()
         content.title = reminderName
         content.body = date.prettyDateStringEEEE_MMM_d_yyyy_h_mm_a
-        content.badge = 1
+//        content.badge = 1
         content.sound = UNNotificationSound(named: NotificationManager.notificationSound)
         
-        // TODO: five seconds in the future - just for testing
-        // TODO: replace with commented code for release
-        let dateComponents = (Date() + 5).dateComponents //date.dateComponents
+        let dateComponents = date.dateComponents
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
         let request = UNNotificationRequest(identifier: prefixedNotification, content: content, trigger: trigger)
@@ -70,7 +72,7 @@ class NotificationManager: NSObject {
         let content = UNMutableNotificationContent()
         content.title = reminderName
         content.body = locationDescription
-        content.badge = 1
+//        content.badge = 1
         content.sound = UNNotificationSound(named: NotificationManager.notificationSound)
         
         // reconstruct a coordinate from lat/long

@@ -11,6 +11,7 @@ import UIKit
 
 extension UIViewController {
     
+    // display any error notifications
     func onDailyDiaryError(notification: Notification) {
         
         guard self.isViewLoaded && (self.view.window != nil),

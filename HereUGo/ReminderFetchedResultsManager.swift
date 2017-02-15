@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 import UIKit
 
+// manages the fetched results controller for reminders
 class ReminderFetchedResultsManager: NSObject, NSFetchedResultsControllerDelegate {
     
     // any search text to be used in the fetch request
@@ -64,15 +65,16 @@ class ReminderFetchedResultsManager: NSObject, NSFetchedResultsControllerDelegat
         }
         
         let request: NSFetchRequest<Reminder> = Reminder.fetchRequest()
-        //let sectionNameKeyPath = "sectionIdentifier"
         
         request.sortDescriptors = getSortDescriptors()
 
         // Set the batch size to a suitable number.
         request.fetchBatchSize = 20
-        
+
         if searchString.characters.count > 0 {
             
+            // the user is searching
+
             let predicate = NSPredicate(format: "name contains[cd] %@ OR notes contains[cd] %@", argumentArray: [searchString, searchString])
             
             if let basePredicate = getBaseFilterPredicate() {
@@ -87,6 +89,7 @@ class ReminderFetchedResultsManager: NSObject, NSFetchedResultsControllerDelegat
             
         } else {
             
+            // not searching, so just use the base predicate based on filter preference
             request.predicate = getBaseFilterPredicate()
         }
         
@@ -110,7 +113,7 @@ class ReminderFetchedResultsManager: NSObject, NSFetchedResultsControllerDelegat
             
             // post a notification for anyone interested in error messages for failed save requests
             let fetchError = TJMApplicationError(title: "Fetched Results Error", message: message, fatal: false)
-            NotificationCenter.default.post(name: TJMApplicationError.ErrorNotification, object: self, userInfo: fetchError.makeUserInfoDict())
+            fetchError.postMyself()
         }
         
         _fetchedResultsController = frc

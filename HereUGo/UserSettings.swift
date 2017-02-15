@@ -8,6 +8,7 @@
 
 import Foundation
 
+// provide simple methods for getting and setting sort and filter options
 struct UserSettings {
     
     static let sortPreferenceKey = "sortPreferenceKey"

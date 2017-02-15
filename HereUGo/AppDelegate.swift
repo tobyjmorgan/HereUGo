@@ -29,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Set font color of navigation bar
         UINavigationBar.appearance().tintColor = .white
    
+        // clear out old badges when app starts
+        application.applicationIconBadgeNumber = 0
+        
         // Override point for customization after application launch.
         let splitViewController = self.window!.rootViewController as! UISplitViewController
         let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController

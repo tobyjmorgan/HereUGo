@@ -11,13 +11,16 @@ import CoreData
 
 extension TriggerLocation {
     
+    // ridiculous lat and long - will be used to indicate that this location hasn't been set yet
     static let fakeLatitude: Double = 100
     static let fakeLongitude: Double = 200
     
+    // determine if the location has been set yet
     var isLocationSet: Bool {
         return (self.latitude >= -180 && self.latitude <= 180 && self.longitude >= -90 && self.longitude <= 90)
     }
     
+    // creates a quick default instance
     class func newInstance(context: NSManagedObjectContext) -> TriggerLocation {
         
         let newInstance = TriggerLocation(context: context)
@@ -30,6 +33,7 @@ extension TriggerLocation {
         return newInstance
     }
     
+    // provides a pretty description of the location 
     var prettyLocationDescription: String {
         
         let prefix: String

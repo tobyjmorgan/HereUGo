@@ -43,9 +43,9 @@ class CoreDataController: NSObject {
                 let message = "Failed set up persistent store: \(nsError.localizedDescription)"
                 print(message)
                 
-                // post a notification for anyone listening for Core Data errors
+                // post an app error for anyone listening
                 let coreDataError = TJMApplicationError(title: "Core Data Error", message: message, fatal: true)
-                NotificationCenter.default.post(name: TJMApplicationError.ErrorNotification, object: self, userInfo: coreDataError.makeUserInfoDict())
+                coreDataError.postMyself()
             }
         })
         
@@ -73,9 +73,9 @@ class CoreDataController: NSObject {
                 let errorUserInfo = nsError.userInfo
                 print(errorUserInfo)
                 
-                // post a notification for anyone interested in error messages for failed save requests
+                // post an app error for anyone interested
                 let coreDataError = TJMApplicationError(title: "Core Data Error", message: message, fatal: true)
-                NotificationCenter.default.post(name: TJMApplicationError.ErrorNotification, object: self, userInfo: coreDataError.makeUserInfoDict())
+                coreDataError.postMyself()
             }
         }
     }

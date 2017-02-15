@@ -526,13 +526,6 @@ extension ReminderViewController: LocationViewControllerDelegate {
         alertLocationLabel.text = description
     }
     
-    func getTriggerWhenLeaving() -> Bool {
-        
-        guard let reminder = reminder, let location = reminder.triggerLocation else { return false }
-        
-        return location.triggerWhenLeaving
-    }
-    
     func setTriggerWhenLeaving(whenLeaving: Bool) {
         
         guard let reminder = reminder, let location = reminder.triggerLocation else { return }
@@ -541,13 +534,19 @@ extension ReminderViewController: LocationViewControllerDelegate {
         CoreDataController.shared.saveContext()
     }
     
-    func currentLocationWithName() -> (Double, Double, String)? {
+    func setRange(range: Int) {
+        
+        guard let reminder = reminder, let location = reminder.triggerLocation else { return }
+        
+        location.range = Int16(range)
+        CoreDataController.shared.saveContext()
+    }
+    
+    func currentTriggerLocation() -> TriggerLocation? {
         
         guard let reminder = reminder, let location = reminder.triggerLocation, location.isLocationSet else { return nil }
         
-        let locationName = location.name ?? ""
-        
-        return (location.latitude, location.longitude, locationName)
+        return location
     }
 }
 

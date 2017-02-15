@@ -9,12 +9,14 @@
 import Foundation
 import CoreData
 
+// currently available filter preferences
 enum FilterPreference: Int {
     case incomplete = 1
     case complete
     case both
 }
 
+// get the appropriate predicate for the filter type
 extension FilterPreference {
     func getPredicate() -> NSPredicate? {
         switch self {

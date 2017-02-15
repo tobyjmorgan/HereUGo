@@ -36,6 +36,7 @@ class ReminderCell: UITableViewCell {
         checkboxButton.isSelected = false
     }
 
+    // when checkBoxButton is pressed, toggle the selected state of the button
     @IBAction func onCheckBox(_ sender: Any) {
         checkboxButton.isSelected = !checkboxButton.isSelected
     }

@@ -9,12 +9,14 @@
 import Foundation
 import CoreData
 
+// currently available sort preferences
 enum SortPreference: Int {
     case priority = 1
     case newest
     case oldest
 }
 
+// get the appropriate sort descriptors array for the sort type
 extension SortPreference {
     func getSortDescriptors() -> [NSSortDescriptor] {
         switch self {

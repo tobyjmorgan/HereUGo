@@ -11,6 +11,7 @@ import CoreData
 
 extension Reminder {
     
+    // creates a quick default instance
     class func newInstance(context: NSManagedObjectContext) -> Reminder {
         
         let newInstance = Reminder(context: context)

@@ -154,7 +154,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iI4-nm-GJk">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
                                                     <subviews>
-                                                        <datePicker contentMode="scaleToFill" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="KwQ-Wu-5e9">
+                                                        <datePicker contentMode="scaleToFill" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="KwQ-Wu-5e9">
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
                                                             <date key="date" timeIntervalSinceReferenceDate="508260855.878546">
                                                                 <!--2017-02-08 15:34:15 +0000-->
@@ -447,13 +447,53 @@
                                             <constraint firstItem="Nmz-KK-ETG" firstAttribute="leading" secondItem="IsU-z5-DzC" secondAttribute="leading" id="hfV-gL-P6p"/>
                                         </constraints>
                                     </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4hV-I8-hfB">
+                                        <rect key="frame" x="0.0" y="74" width="375" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Range in meters:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qsg-m6-ijo">
+                                                <rect key="frame" x="0.0" y="0.0" width="140" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="140" id="M8O-El-4nV"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XaR-n1-pvW">
+                                                <rect key="frame" x="140" y="0.0" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="tgE-dN-bQc"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="50" maxValue="999" translatesAutoresizingMaskIntoConstraints="NO" id="3DF-JB-bcK">
+                                                <rect key="frame" x="188" y="0.0" width="171" height="51"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <connections>
+                                                    <action selector="onRangeSliderChanged:" destination="aWX-Nc-o2L" eventType="valueChanged" id="hEX-rJ-RhE"/>
+                                                </connections>
+                                            </slider>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TjW-1n-M7Y">
+                                                <rect key="frame" x="357" y="0.0" width="18" height="50"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="18" id="BZk-Ki-uM7"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="86L-aF-rVG"/>
+                                        </constraints>
+                                    </stackView>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LDh-7v-lcx">
-                                        <rect key="frame" x="0.0" y="74" width="375" height="529"/>
+                                        <rect key="frame" x="0.0" y="124" width="375" height="479"/>
                                     </mapView>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.1506946683" green="0.28520995380000003" blue="0.45500487090000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="072-Yo-RRF" secondAttribute="trailing" id="ESB-eY-kPY"/>
                             <constraint firstItem="072-Yo-RRF" firstAttribute="leading" secondItem="8GP-7L-JhL" secondAttribute="leading" id="Tml-wY-IJi"/>
@@ -464,6 +504,8 @@
                     <connections>
                         <outlet property="arriveOrLeaveSegmentedControl" destination="Nmz-KK-ETG" id="cOx-xu-1gS"/>
                         <outlet property="mapView" destination="LDh-7v-lcx" id="gNk-yS-E2Z"/>
+                        <outlet property="rangeLabel" destination="XaR-n1-pvW" id="wvQ-ac-3gJ"/>
+                        <outlet property="rangeSlider" destination="3DF-JB-bcK" id="Fmf-Sl-8ac"/>
                         <outlet property="searchBarContainerView" destination="hP2-IN-Jom" id="LQM-aL-c94"/>
                     </connections>
                 </viewController>

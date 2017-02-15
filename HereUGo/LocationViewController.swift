@@ -11,16 +11,21 @@ import MapKit
 
 protocol LocationViewControllerDelegate {
     func onLocationPicked(latitude: Double, longitude: Double, triggerWhenLeaving: Bool, locationName: String?, addressDescription: String?, range: Int)
-    func getTriggerWhenLeaving() -> Bool
     func setTriggerWhenLeaving(whenLeaving: Bool)
-    func currentLocationWithName() -> (Double, Double, String)?
+    func setRange(range: Int)
+    func currentTriggerLocation() -> TriggerLocation?
 }
 
 class LocationViewController: UIViewController {
 
+    static let initialRadius: Int = 50
+    
+    
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var searchBarContainerView: UIView!
     @IBOutlet var arriveOrLeaveSegmentedControl: UISegmentedControl!
+    @IBOutlet var rangeLabel: UILabel!
+    @IBOutlet var rangeSlider: UISlider!
     
     var delegate: LocationViewControllerDelegate? = nil
     
@@ -52,25 +57,19 @@ class LocationViewController: UIViewController {
         return sc
     }()
     
-    var selectedPin: MKPlacemark? = nil
+    var currentPin: MKPlacemark? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let delegate = delegate, let location = delegate.currentLocationWithName() {
+        mapView.delegate = self
+        
+        if let delegate = delegate, let location = delegate.currentTriggerLocation() {
             
-            let coordinate = CLLocationCoordinate2D(latitude: location.0, longitude: location.1)
+            let coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
             
-            mapView.removeAnnotations(mapView.annotations)
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = placemark.coordinate
-            annotation.title = location.2
-            
-            mapView.addAnnotation(annotation)
-            
-            setMapViewRegion(coordinate: placemark.coordinate)
+            addMapAnnotationForPlacemark(placemark: placemark, radius: Int(location.range), overwriteName: location.name)
             
         } else {
             
@@ -83,6 +82,7 @@ class LocationViewController: UIViewController {
         }
         
         refreshArriveOrLeaveSegmentedControl()
+        refreshRangeComponents()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,7 +93,7 @@ class LocationViewController: UIViewController {
     
     func setMapViewRegion(coordinate: CLLocationCoordinate2D) {
         
-        let span = MKCoordinateSpanMake(0.05, 0.05)
+        let span = MKCoordinateSpanMake(0.02, 0.02)
         let region = MKCoordinateRegionMake(coordinate, span)
         
         mapView.setRegion(region, animated: true)
@@ -101,10 +101,19 @@ class LocationViewController: UIViewController {
     
     func refreshArriveOrLeaveSegmentedControl() {
         
-        if let triggerWhenLeaving = delegate?.getTriggerWhenLeaving(), triggerWhenLeaving {
+        if let location = delegate?.currentTriggerLocation(), location.triggerWhenLeaving {
             arriveOrLeaveSegmentedControl.selectedSegmentIndex = 1
         } else {
             arriveOrLeaveSegmentedControl.selectedSegmentIndex = 0
+        }
+    }
+    
+    func refreshRangeComponents() {
+        
+        if let location = delegate?.currentTriggerLocation() {
+            
+            rangeLabel.text = "\(location.range)"
+            rangeSlider.value = Float(Int(location.range))
         }
     }
     
@@ -116,14 +125,42 @@ class LocationViewController: UIViewController {
         
         return false
     }
+    
+    func addMapAnnotationForPlacemark(placemark: MKPlacemark, radius: Int, overwriteName: String?) {
+        
+        // keep for later :-)
+        currentPin = placemark
+        
+        mapView.removeAnnotations(mapView.annotations)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = placemark.coordinate
+        annotation.title = overwriteName ?? placemark.name
+        
+        mapView.addAnnotation(annotation)
+        
+        self.setMapViewRegion(coordinate: placemark.coordinate)
+
+        updateMapCircleForCurrentPin(radius: radius)
+    }
 }
 
 
 
 // Mark - IBActions
 extension LocationViewController {
+    
     @IBAction func onArriveOrLeaveDidChange() {
         delegate?.setTriggerWhenLeaving(whenLeaving: isTriggerWhenLeaving())
+    }
+
+    @IBAction func onRangeSliderChanged(_ sender: UISlider) {
+        
+        let range = Int(sender.value)
+        
+        rangeLabel.text = "\(range)"
+        delegate?.setRange(range: range)
+        updateMapCircleForCurrentPin(radius: range)
     }
 }
 
@@ -139,25 +176,15 @@ extension LocationViewController: UITableViewDelegate {
         let placemark = resultsTableController.searchResults[indexPath.row].placemark
         
         // send the info back to the delegate
-        delegate?.onLocationPicked(latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude, triggerWhenLeaving: isTriggerWhenLeaving(), locationName: placemark.name, addressDescription: placemark.prettyDescription, range: 50)
+        delegate?.onLocationPicked(latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude, triggerWhenLeaving: isTriggerWhenLeaving(), locationName: placemark.name, addressDescription: placemark.prettyDescription, range: LocationViewController.initialRadius)
         
         // display the placemark on the map
-        presentMapViewWithPlacemark(placemark: placemark)
+        presentMapViewWithPlacemark(placemark: placemark, radius: LocationViewController.initialRadius)
     }
     
-    func presentMapViewWithPlacemark(placemark: MKPlacemark) {
+    func presentMapViewWithPlacemark(placemark: MKPlacemark, radius: Int) {
         
-        selectedPin = placemark
-        
-        mapView.removeAnnotations(mapView.annotations)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = placemark.coordinate
-        annotation.title = placemark.name
-        
-        mapView.addAnnotation(annotation)
-        
-        self.setMapViewRegion(coordinate: placemark.coordinate)
+        addMapAnnotationForPlacemark(placemark: placemark, radius: radius, overwriteName:  nil)
         
         // present mapView
         dismiss(animated: true, completion: nil)
@@ -184,3 +211,37 @@ extension LocationViewController: UISearchResultsUpdating {
         }
     }
 }
+
+extension LocationViewController: MKMapViewDelegate {
+    
+    func updateMapCircleForCurrentPin(radius: Int) {
+
+        // clear out old overlays
+        mapView.removeOverlays(mapView.overlays)
+        
+        if let pin = currentPin {
+            
+            let circle = MKCircle(center: pin.coordinate, radius: Double(radius) as CLLocationDistance)
+            mapView.add(circle)
+        }
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKCircle {
+            let circle = MKCircleRenderer(overlay: overlay)
+            circle.strokeColor = UIColor.red
+            circle.fillColor = UIColor(red: 255, green: 0, blue: 0, alpha: 0.1)
+            circle.lineWidth = 1
+            return circle
+        } else {
+            return MKPolylineRenderer()
+        }
+    }
+}
+
+
+
+
+
+
+
