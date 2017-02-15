@@ -11,21 +11,21 @@ import CoreData
 
 // currently available filter preferences
 enum FilterPreference: Int {
-    case incomplete = 1
-    case complete
-    case both
+    case all = 1
+    case open
+    case closed
 }
 
 // get the appropriate predicate for the filter type
 extension FilterPreference {
     func getPredicate() -> NSPredicate? {
         switch self {
-        case .incomplete:
-            return NSPredicate(format: "completed == NO")
-        case .complete:
-            return NSPredicate(format: "completed == YES")
-        case .both:
+        case .all:
             return nil
+        case .open:
+            return NSPredicate(format: "completed == NO")
+        case .closed:
+            return NSPredicate(format: "completed == YES")
         }
     }
 }

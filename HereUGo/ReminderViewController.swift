@@ -54,8 +54,14 @@ class ReminderViewController: UITableViewController {
             CoreDataController.shared.saveContext()
         }
         
-        // call this just to make sure when we leave the screen the notification is accurate
-        refreshCalendarNotification()
+        if let reminder = reminder {
+            
+            // call this just to make sure when we leave the screen the notification is accurate
+            NotificationManager.shared.refreshCalendarNotification(reminder: reminder)
+            NotificationManager.shared.refreshLocationNotification(reminder: reminder)
+        }
+
+        NotificationManager.shared.listAllPendingNotificationRequests()
     }
     
     override func didReceiveMemoryWarning() {
@@ -267,49 +273,6 @@ extension ReminderViewController {
         }
     }
     
-    func refreshCalendarNotification() {
-        
-        guard let reminder = reminder else { return }
-        
-        // don't refresh it if the reminder has already been marked as completed
-        if reminder.completed { return }
-        
-        if let triggerDate = reminder.triggerDate {
-            
-            // create/update the notification
-            NotificationManager.shared.addCalendarNotification(date: triggerDate as Date, reminderName: reminder.name, identifier: reminder.objectID.description, repeats: false)
-            
-        } else {
-            
-            // ensure it doesn't exist
-            NotificationManager.shared.removeCalendarNotification(identifier: reminder.objectID.description)
-        }
-    }
-    
-    func refreshLocationNotification() {
-        
-        guard let reminder = reminder else { return }
-        
-        // don't refresh it if the reminder has already been marked as completed
-        if reminder.completed { return }
-
-        if reminder.shouldTriggerOnLocation {
-            
-            if let location = reminder.triggerLocation {
-                
-                if location.isLocationSet {
-                    
-                    NotificationManager.shared.addLocationNotification(latitude: location.latitude, longitude: location.longitude, locationDescription: location.prettyLocationDescription, reminderName: reminder.name, identifier: reminder.objectID.description, range: Int(location.range), triggerWhenLeaving: location.triggerWhenLeaving)
-                }                
-            }
-            
-        } else {
-            
-            // ensure it doesn't exist
-            NotificationManager.shared.removeLocationNotification(identifier: reminder.objectID.description)
-        }
-    }
-    
     enum SwitchSource {
         case calendar
         case location
@@ -387,6 +350,8 @@ extension ReminderViewController  {
             CoreDataController.shared.saveContext()
             
             hideDatePickerStuff()
+
+            NotificationManager.shared.refreshCalendarNotification(reminder: reminder)
             
         } else {
             
@@ -396,9 +361,6 @@ extension ReminderViewController  {
             
             showDatePickerStuff()
         }
-        
-        // create/update/delete the notification
-        refreshCalendarNotification()
     }
     
     @IBAction func onAlertDateSwitch(_ sender: UISwitch) {
@@ -422,7 +384,6 @@ extension ReminderViewController  {
             
             // clear it out and save to store
             reminder.triggerDate = nil
-            CoreDataController.shared.saveContext()
             
             hideDatePickerStuff()
             
@@ -433,15 +394,16 @@ extension ReminderViewController  {
             // set trigger date to a default alert date/time and save it to store
             let defaultDate = Date() + 60*60 // default to one hour in the future
             reminder.triggerDate = defaultDate as NSDate
-            CoreDataController.shared.saveContext()
             
             makeAlertDateButtonLookActive()
             
             showDatePickerStuff()
         }
 
+        CoreDataController.shared.saveContext()
+
         // create/update/delete the notification
-        refreshCalendarNotification()   
+        NotificationManager.shared.refreshCalendarNotification(reminder: reminder)
     }
     
     @IBAction func onAlertLocationSwitch(_ sender: UISwitch) {
@@ -463,9 +425,6 @@ extension ReminderViewController  {
             
             // clear it out and save to store
             reminder.shouldTriggerOnLocation = false
-            CoreDataController.shared.saveContext()
-            
-            refreshLocationNotification()
             
         } else {
             
@@ -479,11 +438,12 @@ extension ReminderViewController  {
             }
 
             reminder.shouldTriggerOnLocation = true
-            CoreDataController.shared.saveContext()
-            
-            refreshLocationNotification()
-            refreshLocation()
         }
+
+        CoreDataController.shared.saveContext()
+        
+        NotificationManager.shared.refreshLocationNotification(reminder: reminder)
+        refreshLocation()
         
         tableView.beginUpdates()
         tableView.endUpdates()
@@ -529,7 +489,7 @@ extension ReminderViewController: LocationViewControllerDelegate {
         CoreDataController.shared.saveContext()
         
         // create/update notification
-        refreshLocationNotification()
+        NotificationManager.shared.refreshLocationNotification(reminder: reminder)
         
         // update the label to show location description
         alertLocationLabel.text = description

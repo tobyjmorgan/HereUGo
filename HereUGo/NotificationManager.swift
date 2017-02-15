@@ -36,6 +36,11 @@ class NotificationManager: NSObject {
         currentCenter.removeAllDeliveredNotifications()
     }
     
+    func removeAllNotifications() {
+        currentCenter.removeAllDeliveredNotifications()
+        currentCenter.removeAllPendingNotificationRequests()
+    }
+    
     func requestAuthorization() {
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound/*, .badge*/]) { (authorized, error) in
@@ -54,7 +59,6 @@ class NotificationManager: NSObject {
         let content = UNMutableNotificationContent()
         content.title = reminderName
         content.body = date.prettyDateStringEEEE_MMM_d_yyyy_h_mm_a
-//        content.badge = 1
         content.sound = UNNotificationSound(named: NotificationManager.notificationSound)
         
         let dateComponents = date.dateComponents
@@ -72,7 +76,6 @@ class NotificationManager: NSObject {
         let content = UNMutableNotificationContent()
         content.title = reminderName
         content.body = locationDescription
-//        content.badge = 1
         content.sound = UNNotificationSound(named: NotificationManager.notificationSound)
         
         // reconstruct a coordinate from lat/long
@@ -112,6 +115,18 @@ class NotificationManager: NSObject {
         let prefixedNotification = NotificationManager.locationNotificationPrefix + identifier
         removeNotification(identifier: prefixedNotification)
     }
+    
+    func listAllPendingNotificationRequests() {
+        currentCenter.getPendingNotificationRequests { (requests) in
+            
+            for request in requests {
+                print("Request: \(request)")
+            }
+            
+            print("=========================================")
+        }
+        
+    }
 }
 
 
@@ -133,3 +148,43 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
         completionHandler()
     }
 }
+
+
+
+////////////////////////////////////////////////////////////////////////
+// MARK: - Helper Methods for Reminders
+extension NotificationManager {
+    
+    func refreshCalendarNotification(reminder: Reminder) {
+        
+        if !reminder.completed, let triggerDate = reminder.triggerDate, (triggerDate as Date) > Date() {
+            
+            // create/update the notification
+            addCalendarNotification(date: triggerDate as Date, reminderName: reminder.name, identifier: reminder.objectID.description, repeats: false)
+            
+        } else {
+            
+            // ensure it doesn't exist
+            removeCalendarNotification(identifier: reminder.objectID.description)
+        }
+        
+        NotificationManager.shared.listAllPendingNotificationRequests()
+    }
+    
+    func refreshLocationNotification(reminder: Reminder) {
+        
+        if !reminder.completed, reminder.shouldTriggerOnLocation, let location = reminder.triggerLocation, location.isLocationSet {
+                    
+            NotificationManager.shared.addLocationNotification(latitude: location.latitude, longitude: location.longitude, locationDescription: location.prettyLocationDescription, reminderName: reminder.name, identifier: reminder.objectID.description, range: Int(location.range), triggerWhenLeaving: location.triggerWhenLeaving)
+            
+        } else {
+            
+            // ensure it doesn't exist
+            NotificationManager.shared.removeLocationNotification(identifier: reminder.objectID.description)
+        }
+        
+        NotificationManager.shared.listAllPendingNotificationRequests()
+    }
+}
+
+

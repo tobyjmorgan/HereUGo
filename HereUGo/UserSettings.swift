@@ -41,8 +41,8 @@ struct UserSettings {
         
         guard let preference = FilterPreference(rawValue: defaults.integer(forKey: UserSettings.filterPreferenceKey)) else {
             
-            setFilterPreference(filterPreference: .incomplete)
-            return FilterPreference.incomplete
+            setFilterPreference(filterPreference: .all)
+            return FilterPreference.all
         }
         
         return preference

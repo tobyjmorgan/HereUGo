@@ -117,6 +117,9 @@ extension ReminderListViewController {
         
         if !beenRunBefore {
             
+            // clear out any old notifications from previous installs
+            NotificationManager.shared.removeAllNotifications()
+            
             let alert = UIAlertController(title: "Welcome", message: "To add a reminder, just click the Add button in the top right. Enjoy!", preferredStyle: .alert)
             let action = UIAlertAction(title: "Will do!", style: .default, handler: nil)
             alert.addAction(action)
@@ -213,6 +216,10 @@ extension ReminderListViewController {
         let entry = fetchedResultsManager.fetchedResultsController.object(at: IndexPath(row: sender.tag, section: 0))
         
         entry.completed = !entry.completed
+        CoreDataController.shared.saveContext()
+
+        NotificationManager.shared.refreshCalendarNotification(reminder: entry)
+        NotificationManager.shared.refreshLocationNotification(reminder: entry)
     }
 }
 

@@ -17,6 +17,9 @@
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Pmd-2v-anx">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="09Q-Av-qM3" kind="relationship" relationship="rootViewController" id="8nF-SX-cN0"/>
@@ -26,7 +29,7 @@
             </objects>
             <point key="canvasLocation" x="-38" y="-630"/>
         </scene>
-        <!--Reminder View Controller-->
+        <!--Details-->
         <scene sceneID="yao-KY-5rp">
             <objects>
                 <tableViewController id="kDG-Xq-sqY" customClass="ReminderViewController" customModule="HereUGo" customModuleProvider="target" sceneMemberID="viewController">
@@ -128,7 +131,6 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="43" id="FED-br-bud"/>
                                                         <constraint firstAttribute="bottom" secondItem="yHn-t6-uYi" secondAttribute="bottom" id="cna-OE-sfU"/>
                                                         <constraint firstItem="yHn-t6-uYi" firstAttribute="top" secondItem="xZd-RO-QZD" secondAttribute="top" id="jld-PN-xfg"/>
                                                         <constraint firstItem="yHn-t6-uYi" firstAttribute="leading" secondItem="xZd-RO-QZD" secondAttribute="leading" constant="18" id="q29-3W-eiV"/>
@@ -383,7 +385,7 @@
                             <outlet property="delegate" destination="kDG-Xq-sqY" id="JY5-Mi-6Ey"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="yRi-Xd-eIh"/>
+                    <navigationItem key="navigationItem" title="Details" id="yRi-Xd-eIh"/>
                     <connections>
                         <outlet property="alertAtDateAndTimeSwitch" destination="KTO-ol-i2k" id="uNk-Kb-co0"/>
                         <outlet property="alertAtLocationSwitch" destination="Pz4-b1-afz" id="cjR-IU-Rap"/>
@@ -391,7 +393,6 @@
                         <outlet property="alertDateDoneButton" destination="yHn-t6-uYi" id="ZO3-CQ-gUc"/>
                         <outlet property="alertDatePicker" destination="KwQ-Wu-5e9" id="CyF-qm-VKT"/>
                         <outlet property="alertLocationLabel" destination="LIP-Wa-beA" id="5EB-ri-zeL"/>
-                        <outlet property="datePickerContainerHeightConstraint" destination="FED-br-bud" id="rWI-d4-R15"/>
                         <outlet property="listNameLabel" destination="tTo-AL-uHx" id="2px-ho-43e"/>
                         <outlet property="notesTextView" destination="eeQ-TA-0h4" id="dZ2-S4-KDS"/>
                         <outlet property="prioritySegmentedControl" destination="tnl-Rb-8Zr" id="uGW-7q-j1J"/>
@@ -402,10 +403,10 @@
             </objects>
             <point key="canvasLocation" x="708" y="127.28635682158921"/>
         </scene>
-        <!--Location View Controller-->
+        <!--Location-->
         <scene sceneID="9Jb-uc-IJg">
             <objects>
-                <viewController id="aWX-Nc-o2L" customClass="LocationViewController" customModule="HereUGo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Location" id="aWX-Nc-o2L" customClass="LocationViewController" customModule="HereUGo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2hf-PD-DXC"/>
                         <viewControllerLayoutGuide type="bottom" id="MEd-xT-vcX"/>
@@ -579,7 +580,7 @@
             </objects>
             <point key="canvasLocation" x="-856" y="-330"/>
         </scene>
-        <!--Reminder List View Controller-->
+        <!--Here U Go-->
         <scene sceneID="BDo-aV-nBK">
             <objects>
                 <viewController id="09Q-Av-qM3" customClass="ReminderListViewController" customModule="HereUGo" customModuleProvider="target" sceneMemberID="viewController">
@@ -761,7 +762,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="eBT-FX-Hqs">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter by:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqd-tH-HmC">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqd-tH-HmC">
                                                         <rect key="frame" x="0.0" y="0.0" width="94" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -770,7 +771,7 @@
                                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H3f-6R-WRl">
                                                         <rect key="frame" x="94" y="0.0" width="93.5" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                        <state key="normal" title="Incomplete">
+                                                        <state key="normal" title="All">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -779,7 +780,7 @@
                                                     </button>
                                                     <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="twj-4M-IYo">
                                                         <rect key="frame" x="187.5" y="0.0" width="94" height="30"/>
-                                                        <state key="normal" title="Complete">
+                                                        <state key="normal" title="Open">
                                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -788,7 +789,7 @@
                                                     </button>
                                                     <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GRz-Gg-Cnc">
                                                         <rect key="frame" x="281.5" y="0.0" width="93.5" height="30"/>
-                                                        <state key="normal" title="Both">
+                                                        <state key="normal" title="Closed">
                                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
                                                         <connections>
@@ -817,7 +818,7 @@
                             <constraint firstAttribute="bottom" secondItem="RTe-95-SDG" secondAttribute="bottom" id="uYT-nl-wEC"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="XM3-6O-ow3"/>
+                    <navigationItem key="navigationItem" title="Here U Go" id="XM3-6O-ow3"/>
                     <connections>
                         <outlet property="searchBar" destination="adS-rJ-wca" id="xcD-5e-geI"/>
                         <outlet property="sortOptionsContainerView" destination="6DN-Gd-EiF" id="9l0-qK-xBF"/>
@@ -841,6 +842,9 @@
                     <navigationBar key="navigationBar" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DjV-YW-jjY">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="kDG-Xq-sqY" kind="relationship" relationship="rootViewController" id="EL0-P9-NbF"/>
