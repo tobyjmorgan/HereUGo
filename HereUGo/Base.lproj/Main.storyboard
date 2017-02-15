@@ -468,7 +468,7 @@
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="50" maxValue="999" translatesAutoresizingMaskIntoConstraints="NO" id="3DF-JB-bcK">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="50" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="3DF-JB-bcK">
                                                 <rect key="frame" x="188" y="0.0" width="171" height="51"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <connections>

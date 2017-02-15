@@ -214,13 +214,22 @@ extension ReminderViewController {
         
         datePickerContainerHeightConstraint.constant = 216
         
+        // set the picker's date to the current triggerDate
+        // if this is less than the minimum date, then it will be automatically changed to the earliest possible date
+        if let reminder = reminder, let triggerDate = reminder.triggerDate {
+            
+            alertDatePicker.date = triggerDate as Date
+        }
+        
         alertDatePicker.isHidden = false
         
         alertDateCell.layoutIfNeeded()
 
         pickingDate = true
 
-        alertDatePicker.minimumDate = Date() + 60 * 10
+        alertDatePicker.minimumDate = Date() + 60 * 1
+        
+        // if reminder date is in the past
         tableView.beginUpdates()
         tableView.endUpdates()
     }

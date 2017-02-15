@@ -17,9 +17,6 @@ protocol LocationViewControllerDelegate {
 }
 
 class LocationViewController: UIViewController {
-
-    static let initialRadius: Int = 50
-    
     
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var searchBarContainerView: UIView!
@@ -58,11 +55,15 @@ class LocationViewController: UIViewController {
     }()
     
     var currentPin: MKPlacemark? = nil
+    let searchCompleter = MKLocalSearchCompleter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         mapView.delegate = self
+        
+        searchCompleter.delegate = self
+        searchCompleter.region = mapView.region
         
         if let delegate = delegate, let location = delegate.currentTriggerLocation() {
             
@@ -97,6 +98,7 @@ class LocationViewController: UIViewController {
         let region = MKCoordinateRegionMake(coordinate, span)
         
         mapView.setRegion(region, animated: true)
+        searchCompleter.region = region
     }
     
     func refreshArriveOrLeaveSegmentedControl() {
@@ -173,13 +175,31 @@ extension LocationViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let placemark = resultsTableController.searchResults[indexPath.row].placemark
+        let completion = resultsTableController.searchResults[indexPath.row]
         
-        // send the info back to the delegate
-        delegate?.onLocationPicked(latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude, triggerWhenLeaving: isTriggerWhenLeaving(), locationName: placemark.name, addressDescription: placemark.prettyDescription, range: LocationViewController.initialRadius)
-        
-        // display the placemark on the map
-        presentMapViewWithPlacemark(placemark: placemark, radius: LocationViewController.initialRadius)
+        let searchRequest = MKLocalSearchRequest(completion: completion)
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { (response, _) in
+            
+            if let response = response, let mapItem = response.mapItems.first {
+                
+                let placemark = mapItem.placemark
+                
+                let range = Int(self.rangeSlider.value)
+                
+                // send the info back to the delegate
+                self.delegate?.onLocationPicked(latitude: placemark.coordinate.latitude,
+                                                longitude: placemark.coordinate.longitude,
+                                                triggerWhenLeaving: self.isTriggerWhenLeaving(),
+                                                locationName: placemark.name,
+                                                addressDescription: placemark.prettyDescription,
+                                                range: range)
+                
+                // display the placemark on the map
+                self.presentMapViewWithPlacemark(placemark: placemark, radius: range)
+            }
+        }
+
     }
     
     func presentMapViewWithPlacemark(placemark: MKPlacemark, radius: Int) {
@@ -201,14 +221,7 @@ extension LocationViewController: UISearchResultsUpdating {
         request.naturalLanguageQuery = searchText
         request.region = mapView.region
         
-        let search = MKLocalSearch(request: request)
-        search.start { response, _ in
-            
-            guard let response = response else { return }
-            
-            self.resultsTableController.searchResults = response.mapItems
-            self.resultsTableController.tableView.reloadData()
-        }
+        searchCompleter.queryFragment = searchText        
     }
 }
 
@@ -239,7 +252,20 @@ extension LocationViewController: MKMapViewDelegate {
     }
 }
 
-
+extension LocationViewController: MKLocalSearchCompleterDelegate {
+    
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        
+        self.resultsTableController.searchResults = completer.results
+        self.resultsTableController.tableView.reloadData()
+    }
+    
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        
+        self.resultsTableController.searchResults = completer.results
+        self.resultsTableController.tableView.reloadData()
+    }
+}
 
 
 

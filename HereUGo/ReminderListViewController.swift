@@ -177,6 +177,7 @@ extension ReminderListViewController {
     func refreshView() {
         
         refreshSortButtons()
+        refreshFilterButtons()
     }
 
     func refreshSortButtons() {
@@ -196,7 +197,7 @@ extension ReminderListViewController {
     func refreshFilterButtons() {
         
         // keep track of the user's preference on how results are filtered
-        let preference = UserSettings.getSortPreference()
+        let preference = UserSettings.getFilterPreference()
         
         for filterButton in filterButtons {
             filterButton.setTitleColor(UIColor.darkGray, for: .normal)

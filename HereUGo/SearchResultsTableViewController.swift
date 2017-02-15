@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 class SearchResultsTableViewController: UITableViewController {
 
-    var searchResults: [MKMapItem] = []
+    var searchResults: [MKLocalSearchCompletion] = []
     
     // MARK: - Table view data source
 
@@ -26,10 +26,10 @@ class SearchResultsTableViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath)
         
-        let placemark = searchResults[indexPath.row].placemark
-        
-        cell.textLabel?.text = placemark.name
-        cell.detailTextLabel?.text = placemark.prettyDescription
+        let completion = searchResults[indexPath.row]
+
+        cell.textLabel?.text = completion.title
+        cell.detailTextLabel?.text = completion.subtitle
         
         return cell
     }
