@@ -38,7 +38,6 @@ class ReminderListViewController: UIViewController {
         tableView.dataSource = self
         
         searchBar.delegate = self
-        //searchBar.layer.cornerRadius = 10
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
@@ -55,8 +54,6 @@ class ReminderListViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        
-        //        tableView.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
         
         // unselect anything that was previously selected when returning to this screen
         // but only if not in split view mode (both sides showing)
@@ -91,6 +88,7 @@ class ReminderListViewController: UIViewController {
             backItem.title = "Back"
             navigationItem.backBarButtonItem = backItem
             
+            // pass on reminder to detail view
             if let lastReminder = lastReminder {
                 let controller = (segue.destination as! UINavigationController).topViewController as! ReminderViewController
                 controller.reminder = lastReminder
@@ -109,6 +107,7 @@ extension ReminderListViewController {
     
     static let beenRunBeforeKey = "BeenRunBefore"
     
+    // if this is the first time opening the app show a welcome message
     func displayWelcome() {
         
         let defaults = UserDefaults.standard
@@ -211,6 +210,7 @@ extension ReminderListViewController {
         }
     }
     
+    // fired when check box button is pressed (i.e. user marks reminder as completed)
     func onCheckBoxButton(_ sender: UIButton) {
         
         let entry = fetchedResultsManager.fetchedResultsController.object(at: IndexPath(row: sender.tag, section: 0))

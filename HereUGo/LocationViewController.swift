@@ -64,6 +64,7 @@ class LocationViewController: UIViewController {
         
         searchCompleter.delegate = self
         searchCompleter.region = mapView.region
+        searchCompleter.filterType = .locationsAndQueries
         
         if let delegate = delegate, let location = delegate.currentTriggerLocation() {
             
@@ -130,7 +131,7 @@ class LocationViewController: UIViewController {
     
     func addMapAnnotationForPlacemark(placemark: MKPlacemark, radius: Int, overwriteName: String?) {
         
-        // keep for later :-)
+        // keep for later so when we want to change the circle overlay, we have the center of the circle
         currentPin = placemark
         
         mapView.removeAnnotations(mapView.annotations)
@@ -173,6 +174,7 @@ extension LocationViewController: UISearchControllerDelegate {
 
 extension LocationViewController: UITableViewDelegate {
     
+    // when a row is selected, we need to go get a placemark, pass it to the delegate and plot it on the map
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let completion = resultsTableController.searchResults[indexPath.row]
@@ -215,13 +217,10 @@ extension LocationViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         
-        guard let mapView = mapView, let searchText = searchController.searchBar.text else { return }
+        guard let searchText = searchController.searchBar.text else { return }
         
-        let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = searchText
-        request.region = mapView.region
-        
-        searchCompleter.queryFragment = searchText        
+        // give the search text to the search completer
+        searchCompleter.queryFragment = searchText
     }
 }
 
@@ -254,6 +253,7 @@ extension LocationViewController: MKMapViewDelegate {
 
 extension LocationViewController: MKLocalSearchCompleterDelegate {
     
+    // add the search results to the table view's data
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
         
         self.resultsTableController.searchResults = completer.results

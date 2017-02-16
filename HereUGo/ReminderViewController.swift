@@ -21,7 +21,6 @@ class ReminderViewController: UITableViewController {
     @IBOutlet var prioritySegmentedControl: UISegmentedControl!
     @IBOutlet var listNameLabel: UILabel!
     @IBOutlet var notesTextView: UITextView!
-    @IBOutlet var datePickerContainerHeightConstraint: NSLayoutConstraint!
     @IBOutlet var alertDateCell: UITableViewCell!
     
     var pickingDate: Bool = false
@@ -31,6 +30,13 @@ class ReminderViewController: UITableViewController {
         super.viewDidLoad()
 
         alertDateDoneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
+
+        // this hindered the cell selection tough handling, so went with just the "done" button on the keyboard
+//        // so we can cancel out of text editing
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(ReminderViewController.onTap))
+//        view.addGestureRecognizer(tap)
+        
+        reminderNameTextField.delegate = self
         
         // make sure alert stuff is off if the reminder has been completed
         if let reminder = reminder, reminder.completed {
@@ -47,6 +53,8 @@ class ReminderViewController: UITableViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        // when leaving the screen save stuff and refresh the notifications
         
         if let text = reminderNameTextField.text {
             
@@ -69,7 +77,10 @@ class ReminderViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // using this method to collapse and show different elements based on state
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        guard let reminder = reminder else { return RowIdentity.hiddenRowHeight }
         
         if let rowIdentity = RowIdentity(indexPath: indexPath) {
             
@@ -77,7 +88,7 @@ class ReminderViewController: UITableViewController {
             
             case .alertDateDescription:
                 
-                if reminder?.triggerDate != nil {
+                if reminder.triggerDate != nil {
                     
                     return RowIdentity.standardRowHeight
                     
@@ -88,7 +99,7 @@ class ReminderViewController: UITableViewController {
                 
             case .alertDateOrDatePicker:
              
-                if reminder?.triggerDate != nil {
+                if reminder.triggerDate != nil {
                     
                     if pickingDate {
                         return RowIdentity.datePickerRowHeight
@@ -105,8 +116,7 @@ class ReminderViewController: UITableViewController {
                 
             case .alertLocation:
                 
-                if let reminder = reminder,
-                    reminder.shouldTriggerOnLocation {
+                if reminder.shouldTriggerOnLocation {
                     
                     return RowIdentity.standardRowHeight
                     
@@ -204,8 +214,6 @@ extension ReminderViewController {
     
     func hideDatePickerStuff() {
         
-        datePickerContainerHeightConstraint.constant = 44
-        
         alertDatePicker.isHidden = true
         
         alertDateCell.layoutIfNeeded()
@@ -217,8 +225,6 @@ extension ReminderViewController {
     }
     
     func showDatePickerStuff() {
-        
-        datePickerContainerHeightConstraint.constant = 216
         
         // set the picker's date to the current triggerDate
         // if this is less than the minimum date, then it will be automatically changed to the earliest possible date
@@ -304,6 +310,17 @@ extension ReminderViewController {
         alert.addAction(cancel)
 
         present(alert, animated: true, completion: nil)
+    }
+    
+    func releaseTextField() {
+        
+        if reminderNameTextField.isFirstResponder {
+            reminderNameTextField.resignFirstResponder()
+            
+            if let reminder = reminder, let text = reminderNameTextField.text {
+                reminder.name = text
+            }
+        }
     }
 }
 
@@ -565,3 +582,16 @@ extension ReminderViewController {
         }
     }
 }
+
+extension ReminderViewController: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        releaseTextField()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        releaseTextField()
+        return false
+    }
+}
+
