@@ -43,7 +43,6 @@ class LocationViewController: UIViewController {
         
         let sc = UISearchController(searchResultsController: self.resultsTableController)
         sc.searchResultsUpdater = self
-        sc.searchBar.sizeToFit()
 
         sc.delegate = self
         sc.hidesNavigationBarDuringPresentation = false
@@ -90,7 +89,20 @@ class LocationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        searchController.searchBar.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin]
         searchBarContainerView.addSubview(searchController.searchBar)
+        searchController.searchBar.updateConstraints()
+        searchController.searchBar.setNeedsDisplay()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // Thanks to André Slotta
+        // http://stackoverflow.com/questions/36164647/uisearchcontroller-search-bar-initially-too-wide
+        var searchBarFrame = searchController.searchBar.frame
+        searchBarFrame.size.width = searchBarContainerView.frame.size.width
+        searchController.searchBar.frame = searchBarFrame
     }
     
     func setMapViewRegion(coordinate: CLLocationCoordinate2D) {
@@ -183,22 +195,26 @@ extension LocationViewController: UITableViewDelegate {
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, _) in
             
-            if let response = response, let mapItem = response.mapItems.first {
+            DispatchQueue.main.async {
                 
-                let placemark = mapItem.placemark
-                
-                let range = Int(self.rangeSlider.value)
-                
-                // send the info back to the delegate
-                self.delegate?.onLocationPicked(latitude: placemark.coordinate.latitude,
-                                                longitude: placemark.coordinate.longitude,
-                                                triggerWhenLeaving: self.isTriggerWhenLeaving(),
-                                                locationName: placemark.name,
-                                                addressDescription: placemark.prettyDescription,
-                                                range: range)
-                
-                // display the placemark on the map
-                self.presentMapViewWithPlacemark(placemark: placemark, radius: range)
+                if let response = response, let mapItem = response.mapItems.first {
+                    
+                    let placemark = mapItem.placemark
+                    
+                    let range = Int(self.rangeSlider.value)
+                    
+                    // send the info back to the delegate
+                    self.delegate?.onLocationPicked(latitude: placemark.coordinate.latitude,
+                                                    longitude: placemark.coordinate.longitude,
+                                                    triggerWhenLeaving: self.isTriggerWhenLeaving(),
+                                                    locationName: placemark.name,
+                                                    addressDescription: placemark.prettyDescription,
+                                                    range: range)
+                    
+                    // display the placemark on the map
+                    self.presentMapViewWithPlacemark(placemark: placemark, radius: range)
+                }
+
             }
         }
 

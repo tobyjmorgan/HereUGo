@@ -17,7 +17,7 @@ extension TriggerLocation {
     
     // determine if the location has been set yet
     var isLocationSet: Bool {
-        return (self.latitude >= -180 && self.latitude <= 180 && self.longitude >= -90 && self.longitude <= 90)
+        return (self.latitude >= -90 && self.latitude <= 90 && self.longitude >= -180 && self.longitude <= 180)
     }
     
     // creates a quick default instance
