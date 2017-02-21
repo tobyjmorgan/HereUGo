@@ -11,11 +11,18 @@ import CoreLocation
 
 class ReminderCell: UITableViewCell {
 
+
+    
     @IBOutlet var cellContainerView: UIView!
     @IBOutlet var checkboxButton: UIButton!
     @IBOutlet var mainLabel: UILabel!
     @IBOutlet var subLabel: UILabel!
     @IBOutlet var disclosureImage: UIImageView!
+    @IBOutlet var alertTypeImageView: UIImageView!
+    @IBOutlet var iconImageView: UIImageView!
+    @IBOutlet var iconOneToOneConstraint: NSLayoutConstraint!
+    @IBOutlet var iconWidthZeroConstraint: NSLayoutConstraint!
+    @IBOutlet var iconSpacerWidthConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,12 +39,71 @@ class ReminderCell: UITableViewCell {
 
     func resetCell() {
         mainLabel.text = ""
-        subLabel.text = ""
+        subLabel.text = "No alert set"
         checkboxButton.isSelected = false
+        setIconImage(iconImage: .none)
     }
+    
 
     // when checkBoxButton is pressed, toggle the selected state of the button
     @IBAction func onCheckBox(_ sender: Any) {
         checkboxButton.isSelected = !checkboxButton.isSelected
+    }
+}
+
+extension ReminderCell {
+    
+    enum IconImage: String {
+        case none
+        case alertEnteringLocation
+        case alertLeavingLocation
+        case alertCalendar
+    }
+    
+    func setIconImage(iconImage: IconImage) {
+        
+        switch iconImage {
+        case .none:
+            setIcon(iconOn: false)
+        case .alertEnteringLocation, .alertLeavingLocation, .alertCalendar:
+            setIcon(iconOn: true)
+            iconImageView.image = UIImage(named: iconImage.rawValue)
+        }
+    }
+    
+    private func setIcon(iconOn: Bool) {
+        
+        if iconOn {
+            
+            // the order of these constraint changes matter in preventing broken constraints
+            iconWidthZeroConstraint.isActive = false
+            iconOneToOneConstraint.isActive = true
+            iconSpacerWidthConstraint.constant = 8
+            
+            
+        } else {
+            
+            // the order of these constraint changes matter in preventing broken constraints
+            iconOneToOneConstraint.isActive = false
+            iconSpacerWidthConstraint.constant = 0
+            iconWidthZeroConstraint.isActive = true
+        }
+    }
+}
+
+extension ReminderCell {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        cellContainerView.backgroundColor = UIColor.lightGray
+        super.touchesBegan(touches, with: event)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        cellContainerView.backgroundColor = UIColor.white
+        super.touchesEnded(touches, with: event)
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        cellContainerView.backgroundColor = UIColor.white
+        super.touchesCancelled(touches, with: event)
     }
 }

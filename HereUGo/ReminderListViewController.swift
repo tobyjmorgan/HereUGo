@@ -16,8 +16,6 @@ class ReminderListViewController: UIViewController {
     @IBOutlet var sortButtons: [UIButton]!
     @IBOutlet var filterButtons: [UIButton]!
     
-    var detailViewController: ReminderViewController? = nil
-
     var lastReminder: Reminder? = nil
     
     // our core data singleton
@@ -41,11 +39,7 @@ class ReminderListViewController: UIViewController {
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? ReminderViewController
-        }
-
+        
         // listen for errors
         NotificationCenter.default.addObserver(self, selector: #selector(ReminderListViewController.onDailyDiaryError(notification:)), name: TJMApplicationError.ErrorNotification, object: nil)
 
@@ -90,7 +84,7 @@ class ReminderListViewController: UIViewController {
             
             // pass on reminder to detail view
             if let lastReminder = lastReminder {
-                let controller = (segue.destination as! UINavigationController).topViewController as! ReminderViewController
+                let controller = (segue.destination as! UINavigationController).topViewController as! ReminderContainerViewController
                 controller.reminder = lastReminder
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
@@ -161,15 +155,23 @@ extension ReminderListViewController {
             
             if let location = entry.triggerLocation, location.isLocationSet {
                 
+                if location.triggerWhenLeaving {
+                    reminderCell.setIconImage(iconImage: .alertLeavingLocation)
+                } else {
+                    reminderCell.setIconImage(iconImage: .alertEnteringLocation)
+                }
+                
                 reminderCell.subLabel.text = location.prettyLocationDescription
                 
             } else {
                 
+                reminderCell.setIconImage(iconImage: .none)
                 reminderCell.subLabel.text = "Location not set"
             }
             
         } else if let triggerDate = entry.triggerDate {
             
+            reminderCell.setIconImage(iconImage: .alertCalendar)
             reminderCell.subLabel.text = (triggerDate as Date).prettyDateStringEEEE_MMM_d_yyyy_h_mm_a
         }
         

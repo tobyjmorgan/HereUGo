@@ -16,8 +16,7 @@
 		6B8FA8E71E4E57FC0037483C /* SearchResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FA8E61E4E57FC0037483C /* SearchResultsTableViewController.swift */; };
 		6B8FA8E91E520A700037483C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8FA8E81E520A700037483C /* NotificationManager.swift */; };
 		6B8FA8EB1E520EDB0037483C /* Notification.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6B8FA8EA1E520EDB0037483C /* Notification.wav */; };
-		6B8FA8EE1E5239A90037483C /* Layer 1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B8FA8EC1E5239A90037483C /* Layer 1@2x.png */; };
-		6B8FA8EF1E5239A90037483C /* Layer 1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6B8FA8ED1E5239A90037483C /* Layer 1@3x.png */; };
+		6BB00B231E5AA7F700FBED1C /* ReminderContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB00B221E5AA7F700FBED1C /* ReminderContainerViewController.swift */; };
 		6BCBEAA21E46CAAE00DF6273 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAA11E46CAAE00DF6273 /* AppDelegate.swift */; };
 		6BCBEAA51E46CAAE00DF6273 /* HereUGo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6BCBEAA31E46CAAE00DF6273 /* HereUGo.xcdatamodeld */; };
 		6BCBEAAC1E46CAAE00DF6273 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6BCBEAAA1E46CAAE00DF6273 /* Main.storyboard */; };
@@ -60,6 +59,8 @@
 		6BDEBFC31E53780A00C64155 /* CLPlacemark+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDEBFC01E5376DC00C64155 /* CLPlacemark+extensions.swift */; };
 		6BDEBFC51E53B60400C64155 /* FilterPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDEBFC41E53B60400C64155 /* FilterPreference.swift */; };
 		6BDEBFC61E53B60400C64155 /* FilterPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDEBFC41E53B60400C64155 /* FilterPreference.swift */; };
+		6BDEBFC91E57E0B300C64155 /* HereUGoLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BDEBFC71E57E0B300C64155 /* HereUGoLogo@2x.png */; };
+		6BDEBFCA1E57E0B300C64155 /* HereUGoLogo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6BDEBFC81E57E0B300C64155 /* HereUGoLogo@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,8 +88,7 @@
 		6B8FA8E61E4E57FC0037483C /* SearchResultsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewController.swift; sourceTree = "<group>"; };
 		6B8FA8E81E520A700037483C /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		6B8FA8EA1E520EDB0037483C /* Notification.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Notification.wav; sourceTree = "<group>"; };
-		6B8FA8EC1E5239A90037483C /* Layer 1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Layer 1@2x.png"; sourceTree = "<group>"; };
-		6B8FA8ED1E5239A90037483C /* Layer 1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Layer 1@3x.png"; sourceTree = "<group>"; };
+		6BB00B221E5AA7F700FBED1C /* ReminderContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderContainerViewController.swift; sourceTree = "<group>"; };
 		6BCBEA9E1E46CAAE00DF6273 /* HereUGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HereUGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BCBEAA11E46CAAE00DF6273 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6BCBEAA41E46CAAE00DF6273 /* HereUGo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HereUGo.xcdatamodel; sourceTree = "<group>"; };
@@ -121,6 +121,8 @@
 		6BCBEB0E1E4A397B00DF6273 /* UIViewController+DailyDiaryError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+DailyDiaryError.swift"; sourceTree = "<group>"; };
 		6BDEBFC01E5376DC00C64155 /* CLPlacemark+extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CLPlacemark+extensions.swift"; sourceTree = "<group>"; };
 		6BDEBFC41E53B60400C64155 /* FilterPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterPreference.swift; sourceTree = "<group>"; };
+		6BDEBFC71E57E0B300C64155 /* HereUGoLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HereUGoLogo@2x.png"; sourceTree = "<group>"; };
+		6BDEBFC81E57E0B300C64155 /* HereUGoLogo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HereUGoLogo@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				6BCBEAE61E49026B00DF6273 /* ReminderListViewController.swift */,
+				6BB00B221E5AA7F700FBED1C /* ReminderContainerViewController.swift */,
 				6B8FA8B71E4B71A20037483C /* ReminderViewController.swift */,
 				6B8FA8BF1E4CDD760037483C /* LocationViewController.swift */,
 				6B8FA8E61E4E57FC0037483C /* SearchResultsTableViewController.swift */,
@@ -199,8 +202,8 @@
 				6BCBEAE21E49018D00DF6273 /* View */,
 				6BCBEAE11E48DF9800DF6273 /* Controller */,
 				6BCBEAAD1E46CAAE00DF6273 /* Assets.xcassets */,
-				6B8FA8EC1E5239A90037483C /* Layer 1@2x.png */,
-				6B8FA8ED1E5239A90037483C /* Layer 1@3x.png */,
+				6BDEBFC71E57E0B300C64155 /* HereUGoLogo@2x.png */,
+				6BDEBFC81E57E0B300C64155 /* HereUGoLogo@3x.png */,
 				6B8FA8EA1E520EDB0037483C /* Notification.wav */,
 				6BCBEAAF1E46CAAE00DF6273 /* LaunchScreen.storyboard */,
 				6BCBEAB21E46CAAE00DF6273 /* Info.plist */,
@@ -400,8 +403,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6BCBEAB11E46CAAE00DF6273 /* LaunchScreen.storyboard in Resources */,
-				6B8FA8EE1E5239A90037483C /* Layer 1@2x.png in Resources */,
-				6B8FA8EF1E5239A90037483C /* Layer 1@3x.png in Resources */,
+				6BDEBFC91E57E0B300C64155 /* HereUGoLogo@2x.png in Resources */,
+				6BDEBFCA1E57E0B300C64155 /* HereUGoLogo@3x.png in Resources */,
 				6B8FA8EB1E520EDB0037483C /* Notification.wav in Resources */,
 				6BCBEAAE1E46CAAE00DF6273 /* Assets.xcassets in Resources */,
 				6BCBEAAC1E46CAAE00DF6273 /* Main.storyboard in Resources */,
@@ -436,6 +439,7 @@
 				6BCBEAA21E46CAAE00DF6273 /* AppDelegate.swift in Sources */,
 				6B8FA8E91E520A700037483C /* NotificationManager.swift in Sources */,
 				6BCBEAA51E46CAAE00DF6273 /* HereUGo.xcdatamodeld in Sources */,
+				6BB00B231E5AA7F700FBED1C /* ReminderContainerViewController.swift in Sources */,
 				6BCBEAD91E48DE9000DF6273 /* CoreDataController.swift in Sources */,
 				6BCBEAEA1E490C4400DF6273 /* UserSettings.swift in Sources */,
 				6BCBEAE41E4901B300DF6273 /* ReminderCell.swift in Sources */,

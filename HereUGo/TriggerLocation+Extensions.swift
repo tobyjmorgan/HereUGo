@@ -36,18 +36,10 @@ extension TriggerLocation {
     // provides a pretty description of the location 
     var prettyLocationDescription: String {
         
-        let prefix: String
-        
-        if self.triggerWhenLeaving {
-            prefix = "<< "
-        } else {
-            prefix = ">> "
-        }
-        
         // flatmap to remove optionals
         let placeDescriptionElements: [String] = [self.name, self.addressDescription].flatMap { $0 }
         
         // concatenate with commas
-        return prefix + placeDescriptionElements.joined(separator: ", ")
+        return placeDescriptionElements.joined(separator: ", ")
     }
 }

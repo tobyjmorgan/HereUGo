@@ -61,6 +61,9 @@ class LocationViewController: UIViewController {
         
         mapView.delegate = self
         
+        let gestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(LocationViewController.handleLongPress(gestureReconizer:)))
+        mapView.addGestureRecognizer(gestureRecognizer)
+        
         searchCompleter.delegate = self
         searchCompleter.region = mapView.region
         searchCompleter.filterType = .locationsAndQueries
@@ -70,7 +73,7 @@ class LocationViewController: UIViewController {
             let coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             let placemark = MKPlacemark(coordinate: coordinate, addressDictionary: nil)
             
-            addMapAnnotationForPlacemark(placemark: placemark, radius: Int(location.range), overwriteName: location.name)
+            addMapAnnotationForPlacemark(placemark: placemark, radius: Int(location.range), overwriteName: location.name, refreshRegion: true)
             
         } else {
             
@@ -141,21 +144,23 @@ class LocationViewController: UIViewController {
         return false
     }
     
-    func addMapAnnotationForPlacemark(placemark: MKPlacemark, radius: Int, overwriteName: String?) {
+    func addMapAnnotationForPlacemark(placemark: MKPlacemark, radius: Int, overwriteName: String?, refreshRegion: Bool) {
         
         // keep for later so when we want to change the circle overlay, we have the center of the circle
         currentPin = placemark
-        
-        mapView.removeAnnotations(mapView.annotations)
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = placemark.coordinate
         annotation.title = overwriteName ?? placemark.name
         
+        mapView.removeAnnotations(mapView.annotations)
         mapView.addAnnotation(annotation)
         
-        self.setMapViewRegion(coordinate: placemark.coordinate)
-
+        if refreshRegion {
+            
+            self.setMapViewRegion(coordinate: annotation.coordinate)
+        }
+        
         updateMapCircleForCurrentPin(radius: radius)
     }
 }
@@ -222,7 +227,7 @@ extension LocationViewController: UITableViewDelegate {
     
     func presentMapViewWithPlacemark(placemark: MKPlacemark, radius: Int) {
         
-        addMapAnnotationForPlacemark(placemark: placemark, radius: radius, overwriteName:  nil)
+        addMapAnnotationForPlacemark(placemark: placemark, radius: radius, overwriteName:  nil, refreshRegion: true)
         
         // present mapView
         dismiss(animated: true, completion: nil)
@@ -241,6 +246,34 @@ extension LocationViewController: UISearchResultsUpdating {
 }
 
 extension LocationViewController: MKMapViewDelegate {
+    
+    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+        
+        let locationPoint = gestureReconizer.location(in: mapView)
+        let coordinate = mapView.convert(locationPoint,toCoordinateFrom: mapView)
+        let radius = Int(rangeSlider.value)
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        
+        locationManager.geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            
+            guard let rawPlacemark = placemarks?.first else { return }
+            
+            let placemark = MKPlacemark(placemark: rawPlacemark)
+            
+            DispatchQueue.main.async {
+                
+                // send the info back to the delegate
+                self.delegate?.onLocationPicked(latitude: placemark.coordinate.latitude,
+                                                longitude: placemark.coordinate.longitude,
+                                                triggerWhenLeaving: self.isTriggerWhenLeaving(),
+                                                locationName: placemark.name,
+                                                addressDescription: placemark.prettyDescription,
+                                                range: radius)
+                
+                self.addMapAnnotationForPlacemark(placemark: placemark, radius: radius, overwriteName: nil, refreshRegion: false)
+            }
+        }
+    }
     
     func updateMapCircleForCurrentPin(radius: Int) {
 

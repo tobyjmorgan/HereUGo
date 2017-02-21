@@ -22,6 +22,7 @@ class ReminderViewController: UITableViewController {
     @IBOutlet var listNameLabel: UILabel!
     @IBOutlet var notesTextView: UITextView!
     @IBOutlet var alertDateCell: UITableViewCell!
+    @IBOutlet var notifyAtLocationLabel: UILabel!
     
     var pickingDate: Bool = false
     var triggerWhenLeaving: Bool = false
@@ -31,7 +32,7 @@ class ReminderViewController: UITableViewController {
 
         alertDateDoneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
 
-        // this hindered the cell selection tough handling, so went with just the "done" button on the keyboard
+        // this hindered the cell selection touch handling, so went with just the "done" button on the keyboard
 //        // so we can cancel out of text editing
 //        let tap = UITapGestureRecognizer(target: self, action: #selector(ReminderViewController.onTap))
 //        view.addGestureRecognizer(tap)
@@ -125,6 +126,9 @@ class ReminderViewController: UITableViewController {
                     return RowIdentity.hiddenRowHeight
                 }
                 
+            case .list, .notes:
+                return RowIdentity.hiddenRowHeight
+                
             default:
                 break
             }
@@ -180,14 +184,13 @@ extension ReminderViewController {
             
             alertAtLocationSwitch.setOn(true, animated: false)
             
-            refreshLocation()
-            
         } else {
             
             alertAtLocationSwitch.setOn(false, animated: false)
-            alertLocationLabel.text = ""
         }
         
+        refreshLocation()
+
         if reminder.highPriority {
             prioritySegmentedControl.selectedSegmentIndex = 1
         } else {
@@ -267,14 +270,22 @@ extension ReminderViewController {
     
     func refreshLocation() {
         
-        if let reminder = reminder,
+        if alertAtLocationSwitch.isOn,
+           let reminder = reminder,
            let location = reminder.triggerLocation,
            location.isLocationSet {
+            
+            if location.triggerWhenLeaving {
+                notifyAtLocationLabel.text = "Notify me when I leave..."
+            } else {
+                notifyAtLocationLabel.text = "Notify me when I arrive at..."
+            }
             
             self.alertLocationLabel.text = location.prettyLocationDescription
 
         } else {
             
+            notifyAtLocationLabel.text = "Notify me at a location"
             alertLocationLabel.text = "Location not set"
         }
     }
@@ -509,7 +520,7 @@ extension ReminderViewController: LocationViewControllerDelegate {
         NotificationManager.shared.refreshLocationNotification(reminder: reminder)
         
         // update the label to show location description
-        alertLocationLabel.text = description
+        refreshLocation()
     }
     
     func setTriggerWhenLeaving(whenLeaving: Bool) {

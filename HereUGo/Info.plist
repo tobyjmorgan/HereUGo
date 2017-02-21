@@ -20,18 +20,22 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to your location so it can alert you when you&apos;re near a location you have specified.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to your location so you can set location based alerts.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to your location so you can set location based alerts.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to your location so it can alert you when you&apos;re near a location you have specified.</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>UIStatusBarTintParameters</key>
 	<dict>
 		<key>UINavigationBar</key>

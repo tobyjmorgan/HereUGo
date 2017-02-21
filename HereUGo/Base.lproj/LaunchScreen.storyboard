@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Layer 1.png" translatesAutoresizingMaskIntoConstraints="NO" id="jDM-2n-oDc">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HereUGoLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="jDM-2n-oDc">
                                 <rect key="frame" x="7" y="153" width="360" height="360"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="360" id="YfA-dR-Eie"/>
@@ -69,6 +69,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Layer 1.png" width="360" height="360"/>
+        <image name="HereUGoLogo.png" width="360" height="360"/>
     </resources>
 </document>
