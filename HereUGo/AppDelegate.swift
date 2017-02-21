@@ -11,6 +11,8 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
+    static let darkBlueColor = UIColor(red: 38.0/255.0, green: 73.0/255.0, blue: 116.0/255.0, alpha: 1.0)
+    
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -23,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Sets shadow (line below the bar) to a blank image
         UINavigationBar.appearance().shadowImage = UIImage()
         // Sets the translucent background color
-        UINavigationBar.appearance().backgroundColor = UIColor(red: 38.0/255.0, green: 73.0/255.0, blue: 116.0/255.0, alpha: 1.0)
+        UINavigationBar.appearance().backgroundColor = AppDelegate.darkBlueColor
         // Set translucent. (Default value is already true, so this can be removed if desired.)
         UINavigationBar.appearance().isTranslucent = true
         // Set font color of navigation bar

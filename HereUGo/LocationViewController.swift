@@ -92,6 +92,8 @@ class LocationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        searchController.searchBar.barTintColor = AppDelegate.darkBlueColor
+        
         searchController.searchBar.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin]
         searchBarContainerView.addSubview(searchController.searchBar)
         searchController.searchBar.updateConstraints()
