@@ -23,9 +23,9 @@ class ReminderFetchedResultsManager: NSObject, NSFetchedResultsControllerDelegat
     // dependency injection
     let tableView: UITableView
     let managedObjectContext: NSManagedObjectContext
-    let onUpdateCell: (UITableViewCell, Reminder) -> Void
+    let onUpdateCell: (ReminderCell, Reminder) -> Void
     
-    init(managedObjectContext: NSManagedObjectContext, tableView: UITableView, onUpdateCell: @escaping (UITableViewCell, Reminder) -> Void) {
+    init(managedObjectContext: NSManagedObjectContext, tableView: UITableView, onUpdateCell: @escaping (ReminderCell, Reminder) -> Void) {
         self.managedObjectContext = managedObjectContext
         self.tableView = tableView
         self.onUpdateCell = onUpdateCell
@@ -138,15 +138,20 @@ class ReminderFetchedResultsManager: NSObject, NSFetchedResultsControllerDelegat
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
+        
         case .insert:
             tableView.insertRows(at: [newIndexPath!], with: .fade)
-        case .delete:
-            tableView.deleteRows(at: [indexPath!], with: .fade)
+            
         case .update:
             let cell = tableView.cellForRow(at: indexPath!) as! ReminderCell
             onUpdateCell(cell, anObject as! Reminder)
+
+        case .delete:
+            tableView.deleteRows(at: [indexPath!], with: .fade)
+            
         case .move:
             tableView.moveRow(at: indexPath!, to: newIndexPath!)
+            
         }
     }
     

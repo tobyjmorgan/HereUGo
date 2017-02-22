@@ -139,9 +139,16 @@ extension ReminderListViewController {
     }
     
     // configure the cell to represent the information in the row
-    func configureCell(_ cell: UITableViewCell, withEntry entry: Reminder) {
+    func configureCell(_ reminderCell: ReminderCell, withEntry entry: Reminder) {
         
-        guard let reminderCell = cell as? ReminderCell else { return }
+        reminderCell.resetCell()
+        
+        reminderCell.onButtonTouched = { (cell) in
+            
+            guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+            
+            self.onCheckBoxButton(indexPath: indexPath)
+        }
         
         reminderCell.checkboxButton.isSelected = entry.completed
         
@@ -156,25 +163,26 @@ extension ReminderListViewController {
             if let location = entry.triggerLocation, location.isLocationSet {
                 
                 if location.triggerWhenLeaving {
-                    reminderCell.setIconImage(iconImage: .alertLeavingLocation)
+                    reminderCell.setIconType(.alertLeavingLocation)
                 } else {
-                    reminderCell.setIconImage(iconImage: .alertEnteringLocation)
+                    reminderCell.setIconType(.alertEnteringLocation)
                 }
                 
                 reminderCell.subLabel.text = location.prettyLocationDescription
                 
             } else {
                 
-                reminderCell.setIconImage(iconImage: .none)
+                reminderCell.setIconType(.none)
                 reminderCell.subLabel.text = "Location not set"
             }
             
         } else if let triggerDate = entry.triggerDate {
             
-            reminderCell.setIconImage(iconImage: .alertCalendar)
+            reminderCell.setIconType(.alertCalendar)
             reminderCell.subLabel.text = (triggerDate as Date).prettyDateStringEEEE_MMM_d_yyyy_h_mm_a
         }
         
+        // ensure the cell's layout is updated
         reminderCell.layoutIfNeeded()
     }
 
@@ -213,9 +221,9 @@ extension ReminderListViewController {
     }
     
     // fired when check box button is pressed (i.e. user marks reminder as completed)
-    func onCheckBoxButton(_ sender: UIButton) {
+    func onCheckBoxButton(indexPath: IndexPath) {
         
-        let entry = fetchedResultsManager.fetchedResultsController.object(at: IndexPath(row: sender.tag, section: 0))
+        let entry = fetchedResultsManager.fetchedResultsController.object(at: indexPath)
         
         entry.completed = !entry.completed
         CoreDataController.shared.saveContext()
@@ -268,19 +276,11 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        print("cellForRowAt: \(indexPath.row)")
         let cell = tableView.dequeueReusableCell(withIdentifier: "ReminderCell", for: indexPath) as! ReminderCell
-        
-        cell.resetCell()
-        cell.checkboxButton.tag = indexPath.row
-        cell.checkboxButton.addTarget(self, action: #selector(ReminderListViewController.onCheckBoxButton(_:)), for: .touchUpInside)
-        
         let entry = fetchedResultsManager.fetchedResultsController.object(at: indexPath)
         
         configureCell(cell, withEntry: entry)
-        
-        // ensure the cell's layout is updated
-        cell.layoutIfNeeded()
         
         return cell
     }

@@ -55,8 +55,8 @@ class LocationManager: NSObject {
         switch manager.authorizationStatus() {
         
         case .authorizedAlways:
-            // not requested by this app so should never happen
-            break
+            // ask for permission
+            manager.startUpdatingLocation()
             
         case .notDetermined:
             // ask for permission
@@ -116,7 +116,7 @@ extension LocationManager: CLLocationManagerDelegate {
     
     internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
-        if status == .authorizedWhenInUse {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
             manager.startUpdatingLocation()
         }
     }

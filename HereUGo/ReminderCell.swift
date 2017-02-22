@@ -11,6 +11,7 @@ import CoreLocation
 
 class ReminderCell: UITableViewCell {
 
+    var onButtonTouched: ((UITableViewCell) -> Void)? = nil
 
     
     @IBOutlet var cellContainerView: UIView!
@@ -41,37 +42,41 @@ class ReminderCell: UITableViewCell {
         mainLabel.text = ""
         subLabel.text = "No alert set"
         checkboxButton.isSelected = false
-        setIconImage(iconImage: .none)
+        setIconType(.none)
     }
     
 
     // when checkBoxButton is pressed, toggle the selected state of the button
     @IBAction func onCheckBox(_ sender: Any) {
         checkboxButton.isSelected = !checkboxButton.isSelected
+        onButtonTouched?(self)
     }
 }
 
 extension ReminderCell {
     
-    enum IconImage: String {
+    enum IconType: String {
         case none
         case alertEnteringLocation
         case alertLeavingLocation
         case alertCalendar
     }
     
-    func setIconImage(iconImage: IconImage) {
+    func setIconType(_ type: IconType) {
         
-        switch iconImage {
-        case .none:
-            setIcon(iconOn: false)
-        case .alertEnteringLocation, .alertLeavingLocation, .alertCalendar:
-            setIcon(iconOn: true)
-            iconImageView.image = UIImage(named: iconImage.rawValue)
-        }
+            switch type {
+            
+            case .none:
+                showIcon(false)
+                iconImageView.image = UIImage()
+                
+            case .alertEnteringLocation, .alertLeavingLocation, .alertCalendar:
+                showIcon(true)
+                iconImageView.image = UIImage(named: type.rawValue)
+            }
     }
     
-    private func setIcon(iconOn: Bool) {
+    private func showIcon(_ iconOn: Bool) {
         
         if iconOn {
             
