@@ -71,7 +71,7 @@ class ReminderFetchedResultsManager: NSObject, NSFetchedResultsControllerDelegat
         // Set the batch size to a suitable number.
         request.fetchBatchSize = 20
 
-        if searchString.characters.count > 0 {
+        if searchString.count > 0 {
             
             // the user is searching
 
