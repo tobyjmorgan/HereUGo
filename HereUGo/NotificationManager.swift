@@ -59,7 +59,7 @@ class NotificationManager: NSObject {
         let content = UNMutableNotificationContent()
         content.title = reminderName
         content.body = date.prettyDateStringEEEE_MMM_d_yyyy_h_mm_a
-        content.sound = UNNotificationSound(named: NotificationManager.notificationSound)
+        content.sound = UNNotificationSound(named: convertToUNNotificationSoundName(NotificationManager.notificationSound))
         
         let dateComponents = date.dateComponents
         
@@ -76,7 +76,7 @@ class NotificationManager: NSObject {
         let content = UNMutableNotificationContent()
         content.title = reminderName
         content.body = locationDescription
-        content.sound = UNNotificationSound(named: NotificationManager.notificationSound)
+        content.sound = UNNotificationSound(named: convertToUNNotificationSoundName(NotificationManager.notificationSound))
         
         // reconstruct a coordinate from lat/long
         let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -188,3 +188,8 @@ extension NotificationManager {
 }
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUNNotificationSoundName(_ input: String) -> UNNotificationSoundName {
+	return UNNotificationSoundName(rawValue: input)
+}

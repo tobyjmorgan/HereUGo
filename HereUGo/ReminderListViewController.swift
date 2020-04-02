@@ -123,7 +123,7 @@ extension ReminderListViewController {
         }
     }
     
-    func insertNewObject(_ sender: Any) {
+    @objc func insertNewObject(_ sender: Any) {
         
         // clear out any search text so the new row will appear
         searchBar.text = ""
@@ -290,7 +290,7 @@ extension ReminderListViewController: UITableViewDataSource, UITableViewDelegate
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let context = fetchedResultsManager.fetchedResultsController.managedObjectContext
             context.delete(fetchedResultsManager.fetchedResultsController.object(at: indexPath))

@@ -30,7 +30,7 @@ class ReminderViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        alertDateDoneButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.left
+        alertDateDoneButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.left
 
         // this hindered the cell selection touch handling, so went with just the "done" button on the keyboard
 //        // so we can cancel out of text editing
@@ -596,7 +596,7 @@ extension ReminderViewController {
 
 extension ReminderViewController: UITextFieldDelegate {
     
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         releaseTextField()
     }
     

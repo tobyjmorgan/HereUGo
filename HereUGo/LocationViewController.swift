@@ -112,8 +112,8 @@ class LocationViewController: UIViewController {
     
     func setMapViewRegion(coordinate: CLLocationCoordinate2D) {
         
-        let span = MKCoordinateSpanMake(0.02, 0.02)
-        let region = MKCoordinateRegionMake(coordinate, span)
+        let span = MKCoordinateSpan.init(latitudeDelta: 0.02, longitudeDelta: 0.02)
+        let region = MKCoordinateRegion.init(center: coordinate, span: span)
         
         mapView.setRegion(region, animated: true)
         searchCompleter.region = region
@@ -198,7 +198,7 @@ extension LocationViewController: UITableViewDelegate {
         
         let completion = resultsTableController.searchResults[indexPath.row]
         
-        let searchRequest = MKLocalSearchRequest(completion: completion)
+        let searchRequest = MKLocalSearch.Request(completion: completion)
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, _) in
             
@@ -249,7 +249,7 @@ extension LocationViewController: UISearchResultsUpdating {
 
 extension LocationViewController: MKMapViewDelegate {
     
-    func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
+    @objc func handleLongPress(gestureReconizer: UILongPressGestureRecognizer) {
         
         let locationPoint = gestureReconizer.location(in: mapView)
         let coordinate = mapView.convert(locationPoint,toCoordinateFrom: mapView)
@@ -285,7 +285,7 @@ extension LocationViewController: MKMapViewDelegate {
         if let pin = currentPin {
             
             let circle = MKCircle(center: pin.coordinate, radius: Double(radius) as CLLocationDistance)
-            mapView.add(circle)
+            mapView.addOverlay(circle)
         }
     }
     
